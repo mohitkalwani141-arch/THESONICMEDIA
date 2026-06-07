@@ -4153,9 +4153,8 @@ footer {
   .legal-title { font-size: 13px !important; }
   .legal-links a { font-size: 13px !important; }
 
-  /* Brand wordmark: bleed to card edges + taller on mobile */
+  /* Brand wordmark: bleed to card edges */
   .brand-name-wrap { margin-left: -22px !important; margin-right: -22px !important; }
-  .brand-name-wrap svg { height: 80px !important; width: 100% !important; }
 }
 
 /* ── Mobile (480px and below) ── */
@@ -4224,8 +4223,7 @@ footer {
   .legal-title { font-size: 12px !important; }
   .legal-links a { font-size: 12px !important; }
 
-  /* Brand wordmark: bleed to card edges + taller on small mobile */
+  /* Brand wordmark: bleed to card edges */
   .brand-name-wrap { margin-left: -18px !important; margin-right: -18px !important; }
-  .brand-name-wrap svg { height: 64px !important; width: 100% !important; }
 }
 /* ═══════════════════════════════════════════════════════════ */
