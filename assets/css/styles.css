@@ -4293,3 +4293,230 @@ a.social-icon:focus-visible {
   }
 }
 
+/* ══════════════════════════════════════════════════
+   MOBILE & TABLET HERO — ATMOSPHERIC STRIP LAYERS
+   Desktop is COMPLETELY untouched.
+   Strips become translucent depth layers behind the
+   centred headline at ≤ 1100px (tablet + mobile).
+══════════════════════════════════════════════════ */
+
+/* ── Tablet + Mobile: re-enable hero-right as absolute bg ── */
+@media (max-width: 1100px) {
+
+  /* Override the earlier display:none and make it a full-bleed bg */
+  .hero-right {
+    display: flex !important;       /* restore visibility */
+    position: absolute !important;
+    inset: 0 !important;
+    height: 100% !important;
+    width: 100% !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
+    padding: 0 !important;
+    gap: 0 !important;
+    overflow: hidden !important;
+    /* Gradient edge masks: top, bottom, left, right — bleed into bg */
+    -webkit-mask-image:
+      linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%),
+      linear-gradient(to right,  transparent 0%, black  8%, black 92%, transparent 100%);
+    -webkit-mask-composite: destination-in;
+    mask-image:
+      linear-gradient(to bottom, transparent 0%, black 12%, black 88%, transparent 100%),
+      linear-gradient(to right,  transparent 0%, black  8%, black 92%, transparent 100%);
+    mask-composite: intersect;
+  }
+
+  /* Side-fade overlay no longer needed — hide it */
+  .hero-right .side-fade {
+    display: none !important;
+  }
+
+  /* Remove the ::before/::after gradient overlays that were for desktop layout */
+  .hero-right::before,
+  .hero-right::after {
+    display: none !important;
+  }
+
+  /* Each of the 4 strips spans 25% of the hero width, evenly distributed */
+  .hero-right > .mstrip {
+    flex: 1 1 25% !important;
+    height: 100% !important;
+    overflow: hidden !important;
+  }
+
+  /* Strip opacities — atmospheric, never compete with text */
+  .hero-right > .mstrip:nth-child(1) { opacity: 0.10; }
+  .hero-right > .mstrip:nth-child(2) { opacity: 0.15; }
+  .hero-right > .mstrip:nth-child(3) { opacity: 0.10; }
+  .hero-right > .mstrip:nth-child(4) { opacity: 0.15; }
+
+  /* Subtle blur to soften images further, keeping them atmospheric */
+  .hero-right > .mstrip:nth-child(1),
+  .hero-right > .mstrip:nth-child(3) {
+    filter: blur(1.5px);
+  }
+  .hero-right > .mstrip:nth-child(2),
+  .hero-right > .mstrip:nth-child(4) {
+    filter: blur(2px);
+  }
+
+  /* Vary animation speeds for parallax depth feel */
+  .hero-right > .mstrip:nth-child(1) .mstrip-inner { animation: stripDown 28s linear infinite !important; }
+  .hero-right > .mstrip:nth-child(2) .mstrip-inner { animation: stripUp  22s linear infinite !important; }
+  .hero-right > .mstrip:nth-child(3) .mstrip-inner { animation: stripDown 32s linear infinite !important; }
+  .hero-right > .mstrip:nth-child(4) .mstrip-inner { animation: stripUp  18s linear infinite !important; }
+
+  /* Strip images: fill vertical space; taller aspect for more coverage */
+  .hero-right .mstrip-img {
+    aspect-ratio: 2 / 3 !important;
+    border-radius: 8px !important;
+  }
+
+  /* Disable hover scale — pointer-events already off, but belt+suspenders */
+  .hero-right .mstrip-img:hover img { transform: none !important; }
+
+  /* Hero now needs position:relative to anchor the absolute bg */
+  .hero {
+    position: relative !important;
+    overflow: hidden !important;
+  }
+
+  /* Ensure hero-left and all content sit above the bg strips */
+  .hero-left {
+    position: relative !important;
+    z-index: 3 !important;
+  }
+  .hero-noise,
+  .hero-orb {
+    z-index: 2 !important;
+  }
+  .hero-scroll {
+    z-index: 4 !important;
+  }
+
+  /* Centre the headline content for the cinematic look */
+  .hero {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    min-height: 100svh !important;
+    grid-template-columns: unset !important;
+  }
+
+  .hero-left {
+    width: 100% !important;
+    text-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    padding: 100px 32px 80px !important;
+  }
+
+  /* Headline sizing: fills ~60-70% of viewport height visually */
+  .hero-h1 {
+    font-size: clamp(52px, 11vw, 88px) !important;
+    line-height: 0.92 !important;
+    text-align: center !important;
+    margin-bottom: 24px !important;
+    /* Subtle text shadow to lift headline off background */
+    text-shadow: 0 2px 40px rgba(8,8,8,0.6), 0 0 80px rgba(8,8,8,0.4) !important;
+  }
+
+  .hero-h1 .or {
+    color: var(--orange) !important;
+    text-shadow:
+      0 0 60px rgba(255,92,0,0.5),
+      0 2px 40px rgba(8,8,8,0.7) !important;
+  }
+
+  .hero-eyebrow {
+    text-align: center !important;
+  }
+
+  .hero-sub {
+    text-align: center !important;
+    max-width: 540px !important;
+    /* Subtle background blur behind body copy for legibility */
+    background: rgba(8,8,8,0.18) !important;
+    backdrop-filter: blur(4px) !important;
+    -webkit-backdrop-filter: blur(4px) !important;
+    border-radius: 12px !important;
+    padding: 12px 16px !important;
+  }
+
+  .hero-btns {
+    justify-content: center !important;
+  }
+
+  /* Dark vignette overlay on top of strips to ensure text readability */
+  .hero::before {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 1 !important;
+    background:
+      radial-gradient(ellipse 70% 80% at 50% 50%,
+        rgba(8,8,8,0.72) 0%,
+        rgba(8,8,8,0.45) 55%,
+        rgba(8,8,8,0.15) 100%) !important;
+    pointer-events: none !important;
+  }
+
+  /* stats row centred */
+  .hero-stats {
+    justify-content: center !important;
+  }
+}
+
+/* ── Tablet fine-tune (769px – 1100px) ── */
+@media (min-width: 769px) and (max-width: 1100px) {
+  .hero-h1 {
+    font-size: clamp(64px, 9vw, 92px) !important;
+  }
+  .hero-left {
+    padding: 120px 48px 100px !important;
+    max-width: 860px !important;
+    margin: 0 auto !important;
+  }
+  .hero-sub {
+    font-size: 17px !important;
+    max-width: 580px !important;
+  }
+}
+
+/* ── Mobile fine-tune (≤ 768px) ── */
+@media (max-width: 768px) {
+  .hero-left {
+    padding: 88px 20px 56px !important;
+  }
+  .hero-h1 {
+    font-size: clamp(46px, 13vw, 72px) !important;
+  }
+  .hero-sub {
+    font-size: 15px !important;
+    padding: 10px 14px !important;
+  }
+  .hero-btns .btn-p,
+  .hero-btns .btn-s {
+    width: 100% !important;
+    justify-content: center !important;
+    border-radius: 14px !important;
+  }
+}
+
+/* ── Small phones (≤ 390px) ── */
+@media (max-width: 390px) {
+  .hero-h1 {
+    font-size: clamp(42px, 13vw, 62px) !important;
+  }
+  .hero-left {
+    padding: 80px 18px 48px !important;
+  }
+  /* Slightly reduce strip opacity on tiny screens for comfort */
+  .hero-right > .mstrip:nth-child(1) { opacity: 0.08 !important; }
+  .hero-right > .mstrip:nth-child(2) { opacity: 0.12 !important; }
+  .hero-right > .mstrip:nth-child(3) { opacity: 0.08 !important; }
+  .hero-right > .mstrip:nth-child(4) { opacity: 0.12 !important; }
+}
+
