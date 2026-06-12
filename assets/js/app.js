@@ -2717,7 +2717,7 @@ function buildFutureVisionSplit({ sectionId, archSelector, rightSelector, imgSel
       if (!isDragging) return;
       dragDelta = e.touches[0].clientX - startX;
       track.style.transition = 'none';
-      track.style.transform = 'translateX(' + (-(current*getCardWidth()) + dragDelta*0.6) + 'px)';
+      track.style.transform = 'translateX(' + (-(current*getCardWidth()) + dragDelta) + 'px)';
     },{passive:true});
     outer.addEventListener('touchend', function(){
       isDragging = false;
@@ -2727,6 +2727,26 @@ function buildFutureVisionSplit({ sectionId, archSelector, rightSelector, imgSel
     });
     goTo(0, false);
   }
+  /* Show/hide home carousel on resize — mirrors services page behavior */
+  function maybeShowHomeCarousel() {
+    var carousel  = document.getElementById('mobSvcCarousel');
+    var coverflow = document.getElementById('homeSvcScrollWrapper');
+    var coverSection = document.querySelector('.home-coverflow-section');
+    if (window.innerWidth <= 900) {
+      if (carousel) { carousel.style.display = 'flex'; }
+      if (coverflow) { coverflow.style.display = 'none'; coverflow.style.height = '0'; coverflow.style.overflow = 'hidden'; }
+      if (coverSection) coverSection.style.display = 'none';
+      if (!inited) buildCarousel();
+    } else {
+      if (carousel) carousel.style.display = 'none';
+      if (coverflow) { coverflow.style.display = ''; coverflow.style.height = ''; coverflow.style.overflow = ''; }
+      if (coverSection) coverSection.style.display = '';
+    }
+  }
+
+  window.addEventListener('resize', maybeShowHomeCarousel);
+  document.addEventListener('DOMContentLoaded', function(){ setTimeout(maybeShowHomeCarousel, 100); });
+
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', buildCarousel);
   else buildCarousel();
 })();
@@ -2810,7 +2830,7 @@ function buildFutureVisionSplit({ sectionId, archSelector, rightSelector, imgSel
       if (!isDragging) return;
       dragDelta = e.touches[0].clientX - startX;
       track.style.transition = 'none';
-      track.style.transform = 'translateX(' + (-(current*getCardWidth()) + dragDelta*0.6) + 'px)';
+      track.style.transform = 'translateX(' + (-(current*getCardWidth()) + dragDelta) + 'px)';
     },{passive:true});
     outer.addEventListener('touchend', function(){
       isDragging = false;
@@ -2825,7 +2845,7 @@ function buildFutureVisionSplit({ sectionId, archSelector, rightSelector, imgSel
 
   /* Show carousel and hide coverflow when services page activates on mobile */
   function maybeShow() {
-    if (window.innerWidth > 768) return;
+    if (window.innerWidth > 900) return;
     var carousel = document.getElementById('pageMobSvcCarousel');
     var coverflow = document.getElementById('pageSvcScrollWrapper');
     if (carousel) carousel.style.display = 'flex';
@@ -2846,13 +2866,13 @@ function buildFutureVisionSplit({ sectionId, archSelector, rightSelector, imgSel
     var coverflow = document.getElementById('pageSvcScrollWrapper');
     var pg = document.getElementById('page-services');
     if (!pg || !pg.classList.contains('active')) return;
-    if (window.innerWidth <= 768) {
-      if (carousel) carousel.style.display = 'flex';
-      if (coverflow) coverflow.style.display = 'none';
+    if (window.innerWidth <= 900) {
+      if (carousel) { carousel.style.display = 'flex'; }
+      if (coverflow) { coverflow.style.display = 'none'; coverflow.style.height = '0'; }
       if (!inited) buildCarousel();
     } else {
       if (carousel) carousel.style.display = 'none';
-      if (coverflow) coverflow.style.display = '';
+      if (coverflow) { coverflow.style.display = ''; coverflow.style.height = ''; }
     }
   });
 })();
