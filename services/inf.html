@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Influencer Marketing — The Sonic Media</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,6 +12,7 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<script src="../assets/js/service-page-optimizations.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
 <style>
 /* ══════════════════════
@@ -426,7 +427,7 @@
         <a href="#" onclick="navigate('svc-inf');return false;"><span class="drop-icon">🤝</span>Influencer Marketing</a>
         <a href="#" onclick="navigate('svc-ecom');return false;"><span class="drop-icon">🛒</span>E-Commerce Marketing</a>
         <a href="#" onclick="navigate('svc-content');return false;"><span class="drop-icon">🎬</span>Content Production & Photo/Videography</a>
-        <a href="#" onclick="navigate('svc-brand');return false;"><span class="drop-icon">🎨</span>Branding & Creative Design</a>
+        <a href="#" onclick="navigate('svc-brand');return false;"><span class="drop-icon">🎨</span>Branding & Advertising Solutions</a>
         <a href="#" onclick="navigate('svc-ai');return false;"><span class="drop-icon">🤖</span>AI Doodling/Editing</a>
       </div>
     </li>
@@ -506,7 +507,7 @@
           <span class="mob-svc-item-icon">🎬</span> Content Production
         </button>
         <button class="mob-svc-item" onclick="navigate('svc-brand');closeMob()">
-          <span class="mob-svc-item-icon">🎨</span> Branding & Creative Design
+          <span class="mob-svc-item-icon">🎨</span> Branding & Advertising Solutions
         </button>
         <button class="mob-svc-item" onclick="navigate('svc-ai');closeMob()">
           <span class="mob-svc-item-icon">🤖</span> AI Doodling / Editing
@@ -564,6 +565,26 @@
 
   <!-- ═══ HERO ═══ -->
   <section id="inf-hero-new" style="min-height:100vh;overflow:hidden;background:#080a0f;">
+    <!-- MOBILE HERO (matches homepage mobile hero, same video) -->
+    <div class="svc-mobile-hero" aria-hidden="true">
+      <div class="svc-mobile-hero-bg">
+        <video src="https://res.cloudinary.com/dq2nrpky0/video/upload/v1781960249/Vid_msgtsg.mp4" autoplay muted loop playsinline></video>
+        <div class="svc-mobile-hero-overlay"></div>
+      </div>
+      <div class="svc-mobile-hero-eyebrow">INFLUENCER MARKETING · AHMEDABAD</div>
+      <div class="svc-mobile-hero-panel">
+        <h1 class="svc-mobile-hero-h1">
+          <span class="line">FIND THE</span>
+          <span class="line">PERFECT</span>
+          <span class="line"><span class="or">CREATOR MATCH.</span></span>
+        </h1>
+        <div class="svc-mobile-hero-btns">
+          <a href="#cme-section" onclick="document.getElementById('cme-section').scrollIntoView({behavior:'smooth'});return false;">Find My Creators</a>
+          <a href="#" onclick="navigate('studio');return false;">View Our Work</a>
+        </div>
+      </div>
+    </div>
+
     <div class="hero-inner-grid">
 
       <!-- LEFT: CONTENT -->
@@ -708,28 +729,28 @@
             { type:'img', url:'https://images.unsplash.com/photo-1504257432389-52343af06ae3?w=400&h=711&fit=crop&crop=faces', label:'Authentic' },
           ];
 
-          // Short looping videos — portrait format (9:16 friendly)
-          // Row 1 uses videosSET_A, Row 2 uses SET_B, Row 3 uses SET_C
-          var INF_VIDS_A = [
-            { type:'vid', src:'https://res.cloudinary.com/dq2nrpky0/video/upload/v1779437141/44748-439982672_medium_ot7bbh.mp4', label:'Beauty' },
-            { type:'vid', src:'https://cdn.coverr.co/videos/coverr-female-model-posing-in-studio-2249/1080p.mp4', label:'Fashion' },
-            { type:'vid', src:'https://cdn.coverr.co/videos/coverr-a-young-woman-dancing-3249/1080p.mp4', label:'Lifestyle' },
+          // Additional featured images — portrait format (9:16 friendly)
+          // Row 1 uses imagesSET_A, Row 2 uses SET_B, Row 3 uses SET_C
+          var INF_IMGS_A = [
+            { type:'img', url:'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=400&h=711&fit=crop&crop=faces', label:'Beauty' },
+            { type:'img', url:'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=400&h=711&fit=crop&crop=faces', label:'Fashion' },
+            { type:'img', url:'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&h=711&fit=crop&crop=faces', label:'Lifestyle' },
           ];
-          var INF_VIDS_B = [
-            { type:'vid', src:'https://cdn.coverr.co/videos/coverr-woman-working-out-3680/1080p.mp4', label:'Fitness' },
-            { type:'vid', src:'https://cdn.coverr.co/videos/coverr-female-content-creator-1851/1080p.mp4', label:'Content' },
-            { type:'vid', src:'https://cdn.coverr.co/videos/coverr-woman-shopping-online-9537/1080p.mp4', label:'E-Commerce' },
+          var INF_IMGS_B = [
+            { type:'img', url:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=711&fit=crop&crop=faces', label:'Fitness' },
+            { type:'img', url:'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=711&fit=crop&crop=faces', label:'Content' },
+            { type:'img', url:'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=400&h=711&fit=crop&crop=faces', label:'E-Commerce' },
           ];
-          var INF_VIDS_C = [
-            { type:'vid', src:'https://cdn.coverr.co/videos/coverr-woman-taking-selfie-4528/1080p.mp4', label:'Creator' },
-            { type:'vid', src:'https://cdn.coverr.co/videos/coverr-a-woman-recording-herself-4527/1080p.mp4', label:'Vlog' },
-            { type:'vid', src:'https://cdn.coverr.co/videos/coverr-a-woman-looking-at-her-phone-7374/1080p.mp4', label:'Social' },
+          var INF_IMGS_C = [
+            { type:'img', url:'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400&h=711&fit=crop&crop=faces', label:'Creator' },
+            { type:'img', url:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=711&fit=crop&crop=faces', label:'Vlog' },
+            { type:'img', url:'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&h=711&fit=crop&crop=faces', label:'Social' },
           ];
 
           var ROW_CONFIG = [
-            { id:'infStrip1', dir:'ltr', count:10, vids: INF_VIDS_A },
-            { id:'infStrip2', dir:'rtl', count:12, vids: INF_VIDS_B },
-            { id:'infStrip3', dir:'ltr', count:9,  vids: INF_VIDS_C },
+            { id:'infStrip1', dir:'ltr', count:10, extraImgs: INF_IMGS_A },
+            { id:'infStrip2', dir:'rtl', count:12, extraImgs: INF_IMGS_B },
+            { id:'infStrip3', dir:'ltr', count:9,  extraImgs: INF_IMGS_C },
           ];
 
           function shuffle(arr){
@@ -738,23 +759,16 @@
             return a;
           }
 
-          // Interleave: every 3rd card is a video, rest are images
-          function buildMixedList(imgs, vids, count) {
-            var imgPool = shuffle(imgs);
-            var vidPool = shuffle(vids);
+          // Build list with all images (mix base images with extra featured images)
+          function buildMixedList(baseImgs, extraImgs, count) {
+            var allImgs = baseImgs.concat(extraImgs);
+            var imgPool = shuffle(allImgs);
             var result = [];
-            var imgIdx = 0, vidIdx = 0;
+            var imgIdx = 0;
             for (var i = 0; i < count; i++) {
-              if ((i + 1) % 3 === 0 && vids.length > 0) {
-                // every 3rd slot: video
-                result.push(vidPool[vidIdx % vidPool.length]);
-                vidIdx++;
-              } else {
-                // otherwise: image
-                if (imgIdx >= imgPool.length) imgPool = shuffle(imgs);
-                result.push(imgPool[imgIdx % imgPool.length]);
-                imgIdx++;
-              }
+              if (imgIdx >= imgPool.length) imgPool = shuffle(allImgs);
+              result.push(imgPool[imgIdx % imgPool.length]);
+              imgIdx++;
             }
             return result;
           }
@@ -762,21 +776,14 @@
           ROW_CONFIG.forEach(function(row){
             var strip = document.getElementById(row.id);
             if(!strip) return;
-            var mixed = buildMixedList(INF_IMGS, row.vids, row.count);
+            var mixed = buildMixedList(INF_IMGS, row.extraImgs, row.count);
             var doubled = mixed.concat(mixed); // seamless loop
             doubled.forEach(function(item){
               var card = document.createElement('div');
               card.className = 'inf-mq-card';
-              if (item.type === 'vid') {
-                card.innerHTML =
-                  '<video src="'+item.src+'" autoplay muted loop playsinline preload="none" '+
-                  'style="display:block;width:100%;height:100%;object-fit:cover;"></video>'+
-                  '<div class="inf-mq-label">'+item.label+'</div>';
-              } else {
-                card.innerHTML =
-                  '<img src="'+item.url+'" alt="'+item.label+'" loading="lazy" decoding="async">'+
-                  '<div class="inf-mq-label">'+item.label+'</div>';
-              }
+              card.innerHTML =
+                '<img src="'+item.url+'" alt="'+item.label+'" loading="lazy" decoding="async">'+
+                '<div class="inf-mq-label">'+item.label+'</div>';
               strip.appendChild(card);
             });
           });
@@ -1271,11 +1278,41 @@
     transition: width .6s ease;
   }
   @media (max-width: 900px) {
-    .app-ptl-inner { padding: 0 20px 72px; }
-    .app-ptl-track { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .app-process-tl-section { padding: 56px 0 0; }
+    .app-ptl-inner { padding: 0 16px 56px; }
+    .app-ptl-header { padding: 0 0 40px; }
+    .app-ptl-title { font-size: clamp(32px, 8vw, 52px); }
+    .app-ptl-sub { font-size: 13px; line-height: 1.65; }
+    .app-ptl-track {
+      grid-template-columns: repeat(5, 1fr);
+      gap: 4px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 8px;
+      scrollbar-width: none;
+    }
+    .app-ptl-track::-webkit-scrollbar { display: none; }
     .app-ptl-track::before { display: none; }
-    .app-ptl-detail { grid-template-columns: 1fr; gap: 24px; padding: 24px; }
-    .app-ptl-node { width: 56px; height: 56px; font-size: 20px; }
+    .app-ptl-step { padding: 8px 4px; min-width: 56px; }
+    .app-ptl-node {
+      width: 48px; height: 48px; font-size: 18px;
+      margin-bottom: 10px;
+      overflow: visible;
+    }
+    .app-ptl-step-num {
+      width: 18px; height: 18px; font-size: 8px;
+      top: -6px; right: -3px;
+    }
+    .app-ptl-step-label { font-size: 8px; letter-spacing: .03em; line-height: 1.3; }
+    .app-ptl-detail { grid-template-columns: 1fr; gap: 20px; padding: 20px 16px; margin-top: 28px; border-radius: 14px; }
+    .app-ptl-detail-title { font-size: 28px; }
+    .app-ptl-detail-desc { font-size: 13px; margin-bottom: 16px; }
+    .app-ptl-mock-card { padding: 12px 14px; gap: 10px; }
+    .app-ptl-mock-icon { width: 34px; height: 34px; font-size: 15px; }
+  }
+  @media (max-width: 480px) {
+    .app-ptl-track { grid-template-columns: repeat(5, minmax(52px, 1fr)); }
+    .app-ptl-step { min-width: 52px; }
   }
   </style>
 
@@ -1466,13 +1503,64 @@
     width: 5px; height: 5px; border-radius: 50%;
     background: rgba(255,255,255,.7); flex-shrink: 0;
   }
-  @media (max-width: 1100px) {
-    .app-caps-deliv-grid { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 900px) {
+    .app-caps-deliv-section { padding: 60px 0; }
+    .app-caps-deliv-inner { padding: 0 16px; }
+    .app-caps-deliv-header { margin-bottom: 32px; }
+    .app-caps-deliv-eyebrow { font-size: 10px; padding: 5px 12px; margin-bottom: 14px; }
+    .app-caps-deliv-title { font-size: clamp(30px, 8vw, 48px); margin-bottom: 10px; }
+    .app-caps-deliv-subtitle { font-size: 13px; }
+    .app-caps-deliv-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    .app-caps-deliv-card {
+      padding: 14px 12px;
+      border-radius: 12px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      grid-template-rows: auto auto;
+      column-gap: 10px;
+      row-gap: 4px;
+    }
+    .app-caps-deliv-card-icon {
+      font-size: 20px;
+      margin-bottom: 0;
+      grid-column: 1;
+      grid-row: 1;
+      align-self: center;
+    }
+    .app-caps-deliv-card-title {
+      font-size: 11px;
+      grid-column: 2;
+      grid-row: 1;
+      align-self: center;
+      margin-bottom: 0;
+    }
+    .app-caps-deliv-card-desc {
+      font-size: 11px;
+      line-height: 1.5;
+      grid-column: 1 / -1;
+      grid-row: 2;
+    }
+    .app-caps-deliv-card-check {
+      top: 10px; right: 10px;
+      width: 18px; height: 18px;
+      font-size: 9px;
+    }
+    .app-caps-deliv-strip {
+      padding: 22px 18px;
+      border-radius: 14px;
+      gap: 18px;
+    }
+    .app-caps-deliv-strip-heading { font-size: clamp(22px, 6vw, 32px); }
+    .app-caps-deliv-strip-right { gap: 8px; }
+    .app-caps-deliv-strip-pill { padding: 6px 12px; font-size: 10px; }
   }
-  @media (max-width: 600px) {
+  @media (max-width: 359px) {
     .app-caps-deliv-grid { grid-template-columns: 1fr; }
-    .app-caps-deliv-inner { padding: 0 20px; }
-    .app-caps-deliv-strip { padding: 28px 24px; }
+    .app-caps-deliv-card { grid-template-columns: auto 1fr; }
   }
   </style>
 
@@ -1529,6 +1617,29 @@
 <option value="ongoing">Ongoing Influencer Program</option>
 
             </select>
+          </div>
+          <!-- Company Information -->
+          <div class="wsv-pf-row">
+            <div class="wsv-pf-field">
+              <label class="wsv-pf-label" for="pfInfCompany">Company Name *</label>
+              <input class="wsv-input wsv-pf-input" type="text" id="pfInfCompany" name="company_name" placeholder="Enter Company Name">
+            </div>
+            <div class="wsv-pf-field">
+              <label class="wsv-pf-label" for="pfInfIndustry">Industry *</label>
+              <select class="wsv-input wsv-select wsv-pf-input" id="pfInfIndustry" name="industry">
+                <option value="" disabled selected>Select Industry ▼</option>
+                <option value="food">Food &amp; Beverage</option>
+                <option value="fashion">Fashion &amp; Lifestyle</option>
+                <option value="health">Health &amp; Wellness</option>
+                <option value="finance">Finance</option>
+                <option value="real-estate">Real Estate</option>
+                <option value="ecommerce">E-Commerce / Retail</option>
+                <option value="hospitality">Hospitality &amp; Travel</option>
+                <option value="tech">Technology &amp; SaaS</option>
+                <option value="education">Education</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
           </div>
           <div class="wsv-pf-row">
             <div class="wsv-pf-field">
@@ -1677,9 +1788,31 @@
     .wsv-final-tag { margin: 0 auto 18px; }
   }
   @media (max-width: 600px) {
-    .wsv-final-cta { padding: 60px 24px; }
-    .wsv-proposal-form { padding: 24px 18px; }
-    .wsv-pf-row { grid-template-columns: 1fr; }
+    .wsv-final-cta { padding: 40px 16px; }
+    .wsv-final-h { font-size: clamp(38px, 11vw, 58px); margin-bottom: 10px; }
+    .wsv-final-p { font-size: 12px; line-height: 1.6; }
+    .wsv-final-tag { font-size: 11px; padding: 5px 12px; margin-bottom: 14px; }
+    .wsv-proposal-form {
+      padding: 20px 16px 18px;
+      border-radius: 16px;
+    }
+    .wsv-pf-row { grid-template-columns: 1fr; gap: 0; }
+    .wsv-pf-field { margin-bottom: 10px; gap: 4px; }
+    .wsv-pf-label { font-size: 9px; letter-spacing: .12em; }
+    .wsv-pf-input {
+      padding: 11px 13px;
+      font-size: 14px;
+      border-radius: 9px;
+      min-height: 44px;
+      box-sizing: border-box;
+    }
+    .wsv-pf-btn {
+      margin-top: 4px;
+      padding: 14px;
+      font-size: 15px;
+      border-radius: 9px;
+      min-height: 48px;
+    }
   }
   </style>
 
@@ -1712,29 +1845,64 @@
     tick();
   })();
 
-  function wsvSubmitProposalInf() {
+  async function wsvSubmitProposalInf() {
     
-    var type    = document.getElementById('pfInfType').value;
-    var name    = document.getElementById('pfInfName').value.trim();
-    var mobile  = document.getElementById('pfInfMobile').value.trim();
-    var email   = document.getElementById('pfInfEmail').value.trim();
-    var budget  = document.getElementById('pfInfBudget').value;
+    var type     = document.getElementById('pfInfType').value;
+    var company  = document.getElementById('pfInfCompany').value.trim();
+    var industry = document.getElementById('pfInfIndustry').value;
+    var name     = document.getElementById('pfInfName').value.trim();
+    var mobile   = document.getElementById('pfInfMobile').value.trim();
+    var email    = document.getElementById('pfInfEmail').value.trim();
+    var budget   = document.getElementById('pfInfBudget').value;
 
-    if (!type || !name || !mobile || !email || !budget) {
+    if (!type || !company || !industry || !name || !mobile || !email || !budget) {
       alert('Please fill in all fields before submitting.');
       return;
     }
 
-    var msg = '🌟 *New Influencer Marketing Request*\n\n'
-      + '*Service:* Influencer Marketing\n'
-      + '*Type:* ' + document.getElementById('pfInfType').options[document.getElementById('pfInfType').selectedIndex].text + '\n'
-      + '*Name:* ' + name + '\n'
-      + '*Mobile:* ' + mobile + '\n'
-      + '*Email:* ' + email + '\n'
-      + '*Budget:* ' + document.getElementById('pfInfBudget').options[document.getElementById('pfInfBudget').selectedIndex].text;
+    var btn = document.querySelector('#wsv-final-cta .wsv-pf-btn');
+    btn.textContent = 'Sending…';
+    btn.disabled = true;
 
-    var waUrl = 'https://wa.me/918733087249?text=' + encodeURIComponent(msg);
-    window.open(waUrl, '_blank');
+    var typeText     = document.getElementById('pfInfType').options[document.getElementById('pfInfType').selectedIndex].text;
+    var industryText = document.getElementById('pfInfIndustry').options[document.getElementById('pfInfIndustry').selectedIndex].text;
+    var budgetText   = document.getElementById('pfInfBudget').options[document.getElementById('pfInfBudget').selectedIndex].text;
+
+    var body = '🌟 New Influencer Marketing Request\n\n'
+      + 'Service: Influencer Marketing\n'
+      + 'Type: ' + typeText + '\n'
+      + 'Company Name: ' + company + '\n'
+      + 'Industry: ' + industryText + '\n'
+      + 'Name: ' + name + '\n'
+      + 'Mobile: ' + mobile + '\n'
+      + 'Email: ' + email + '\n'
+      + 'Budget: ' + budgetText;
+
+    try {
+      var response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          access_key: '66f90d59-83e7-4136-8823-1bfeb38deb41',
+          subject: 'New Influencer Marketing Request – ' + name,
+          from_name: name,
+          email: email,
+          message: body
+        })
+      });
+      var result = await response.json();
+      if (result.success) {
+        btn.textContent = '✓ Proposal Sent!';
+        btn.style.background = '#1a5c1a';
+        setTimeout(function() { btn.textContent = 'Find My Creators →'; btn.style.background = ''; btn.disabled = false; }, 4000);
+      } else {
+        throw new Error(result.message || 'Submission failed');
+      }
+    } catch(e) {
+      btn.textContent = 'Find My Creators →';
+      btn.disabled = false;
+      alert('Submission failed. Please try again or email us directly at info@thesonicmedia.com');
+    }
   }
   </script>
 
@@ -2460,8 +2628,8 @@
 
     <div class="footer-bottom-row">
       <div class="enquiry-form">
-        <input type="text" placeholder="ENTER YOUR MOBILE NUMBER OR MAIL ID">
-        <button class="enquiry-btn" onclick="navigate('contact')" aria-label="Submit enquiry and go to contact page">Enquiry</button>
+        <input type="text" id="footer-enquiry-input" placeholder="ENTER YOUR MOBILE NUMBER OR MAIL ID" autocomplete="off">
+        <button class="enquiry-btn" id="footer-enquiry-btn" onclick="tsmFooterEnquiry(event)" aria-label="Submit enquiry">Enquiry</button>
       </div>
       <div class="legal-links">
         <span class="legal-title">Legal Links</span>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Future Vision — The Sonic Media</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -48,7 +48,7 @@
         <a href="#" onclick="navigate('svc-inf');return false;"><span class="drop-icon">🤝</span>Influencer Marketing</a>
         <a href="#" onclick="navigate('svc-ecom');return false;"><span class="drop-icon">🛒</span>E-Commerce Marketing</a>
         <a href="#" onclick="navigate('svc-content');return false;"><span class="drop-icon">🎬</span>Content Production & Photo/Videography</a>
-        <a href="#" onclick="navigate('svc-brand');return false;"><span class="drop-icon">🎨</span>Branding & Creative Design</a>
+        <a href="#" onclick="navigate('svc-brand');return false;"><span class="drop-icon">🎨</span>Branding & Advertising Solutions</a>
         <a href="#" onclick="navigate('svc-ai');return false;"><span class="drop-icon">🤖</span>AI Doodling/Editing</a>
       </div>
     </li>
@@ -128,7 +128,7 @@
           <span class="mob-svc-item-icon">🎬</span> Content Production
         </button>
         <button class="mob-svc-item" onclick="navigate('svc-brand');closeMob()">
-          <span class="mob-svc-item-icon">🎨</span> Branding & Creative Design
+          <span class="mob-svc-item-icon">🎨</span> Branding & Advertising Solutions
         </button>
         <button class="mob-svc-item" onclick="navigate('svc-ai');closeMob()">
           <span class="mob-svc-item-icon">🤖</span> AI Doodling / Editing
@@ -190,16 +190,6 @@
     <div class="breadcrumb"><a href="#" onclick="navigate('home');return false;">Home</a><span class="bc-sep">→</span><span class="bc-cur">Future Vision</span></div>
   </div>
 
-  <!-- FUTURE VISION — Pinned Split-Screen Mask Reveal (page version) -->
-  <section id="futureSplitSectionPage" style="background:var(--black);padding-top:0;">
-    <!-- Section header — sticky until section ends (matches homepage exactly) -->
-    <div id="fv-page-header" style="position:sticky;top:72px;z-index:100;background:var(--black);padding:14px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;max-width:100%;margin:0 auto;border-bottom:1px solid rgba(255,255,255,.05);">
-      <div style="text-align:left;">
-        <div class="section-tag" style="color:var(--orange);margin-bottom:4px;font-size:10px;">What's Next</div>
-        <h2 class="section-title" style="font-size:clamp(22px,2.4vw,38px);text-align:left;line-height:1;color:var(--white);">The <span style="color:var(--orange);">Future</span> We're Building</h2>
-        <p style="font-family:var(--font-body);font-size:12px;color:rgba(245,240,235,.45);margin-top:4px;font-weight:300;letter-spacing:.02em;">Scroll to explore the innovations and expansions we're building towards.</p>
-      </div>
-    </div>
 
     <!-- Pinned split-screen container (desktop) -->
     <div class="fv-container" id="fvContainerPage">
@@ -311,8 +301,8 @@
 
     <div class="footer-bottom-row">
       <div class="enquiry-form">
-        <input type="text" placeholder="ENTER YOUR MOBILE NUMBER OR MAIL ID">
-        <button class="enquiry-btn" onclick="navigate('contact')" aria-label="Submit enquiry and go to contact page">Enquiry</button>
+        <input type="text" id="footer-enquiry-input" placeholder="ENTER YOUR MOBILE NUMBER OR MAIL ID" autocomplete="off">
+        <button class="enquiry-btn" id="footer-enquiry-btn" onclick="tsmFooterEnquiry(event)" aria-label="Submit enquiry">Enquiry</button>
       </div>
       <div class="legal-links">
         <span class="legal-title">Legal Links</span>
