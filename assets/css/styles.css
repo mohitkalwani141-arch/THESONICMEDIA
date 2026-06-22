@@ -5037,370 +5037,225 @@ a.social-icon:focus-visible {
    END DEVICE-INDEPENDENT RESPONSIVE FIX
    ───────────────────────────────────────────── */
 
+/* ═══════════════════════════════════════════════════
+   TABLET ORIENTATION ADAPTATION
+   iPad/tablet portrait  → full mobile layout
+   iPad/tablet landscape → full desktop layout
+   Tablet range: device width 768px–1366px
+═══════════════════════════════════════════════════ */
 
-/* ═══════════════════════════════════════════════════════════════
-   TABLET ORIENTATION FIX
-   iPads and tablets: portrait → full mobile layout
-                      landscape → full desktop layout
-   Targets devices 768px–1366px wide with touch capability.
-   ═══════════════════════════════════════════════════════════════ */
+/* ── TABLET PORTRAIT: force mobile behavior ──────
+   Targets tablets in portrait orientation where width
+   is typically 768–1024px. We override any tablet-
+   specific rules so they match mobile exactly.        */
+@media (min-width: 600px) and (max-width: 1100px) and (orientation: portrait) {
 
-/* ── TABLET PORTRAIT: force full mobile layout ───────────────── */
-@media (min-width: 600px) and (max-width: 1366px) and (orientation: portrait) {
-
-  /* ── Navigation: hamburger menu, hide desktop links ── */
+  /* Nav: hide desktop links, show hamburger */
   .nav-links { display: none !important; }
   .ham { display: flex !important; }
-  nav { padding: 0 24px !important; height: 60px !important; }
+  nav { padding: 0 24px !important; }
 
-  /* ── Hero: mobile editorial full-screen layout ── */
-  .hero {
-    min-height: 100svh !important;
-    padding: 0 !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    text-align: center !important;
-    position: relative !important;
-    overflow: hidden !important;
-  }
-  .hero-right { display: none !important; }
-  .mstrip-wrap { display: none !important; }
-  .hero-noise, .hero-orb { display: none !important; }
-  .hero-sub { display: none !important; }
-  .hero-stats { display: none !important; }
-  .hero-scroll { display: none !important; }
-  .hero-mobile-bg {
-    display: block !important;
-    position: absolute !important;
-    inset: 0 !important;
-    z-index: 0 !important;
-    overflow: hidden !important;
-  }
-  .hero-mobile-bg img, .hero-mobile-bg video {
-    width: 100% !important; height: 100% !important;
-    object-fit: cover !important; object-position: center !important;
-    transform: scale(1.08) !important;
-    animation: heroKenBurns 14s ease-out forwards !important;
-  }
-  .hero-left {
-    position: absolute !important; inset: 0 !important; z-index: 2 !important;
-    padding: 0 28px !important; display: flex !important;
-    flex-direction: column !important; align-items: center !important;
-    gap: 0 !important; max-width: 600px !important; margin: 0 auto !important;
-  }
-  .hero-eyebrow {
-    position: absolute !important; top: 15% !important; left: 50% !important;
-    transform: translate(-50%, -50%) !important;
-  }
-  .hero-h1 {
-    font-size: clamp(17px, 4vw, 28px) !important;
-    color: var(--orange) !important;
-    white-space: nowrap !important;
-  }
-  .hero-bottom-panel {
-    position: absolute !important; left: 0 !important; right: 0 !important;
-    bottom: 0 !important; height: 25% !important;
-    display: flex !important; flex-direction: column !important;
-    align-items: center !important; justify-content: center !important;
-    padding: 0 18px !important; gap: 10px !important; box-sizing: border-box !important;
-  }
-  .hero-btns {
-    flex-direction: row !important; gap: 8px !important;
-    max-width: 320px !important; margin: 0 auto !important;
-  }
-  .hero-btns .btn-arrow { display: none !important; }
+  /* Hero: single-column, mobile padding */
+  .hero-left { padding: 110px 24px 80px !important; }
 
-  /* ── Services: show mobile carousel, hide desktop bento ── */
-  #homeSvcScrollWrapper { display: none !important; }
-  #pageSvcScrollWrapper { display: none !important; }
-  .mob-svc-carousel-wrap { display: flex !important; }
-  #homeSvcCoverflowSection > .hcf-scroll-wrapper { display: none !important; }
-
-  /* ── Section layout: single column ── */
-  .about { grid-template-columns: 1fr !important; padding: 80px 24px !important; gap: 48px !important; }
-  .about-badge-circle { bottom: -20px !important; right: -10px !important; }
-  .about-float { left: 12px !important; top: 12px !important; }
-
-  .studio-inner { grid-template-columns: 1fr !important; }
-  .studio { padding: 80px 24px !important; }
-  .studio-floats { position: static !important; flex-direction: row !important; flex-wrap: wrap !important; gap: 10px !important; margin-top: 16px !important; }
-
-  .future-grid { grid-template-columns: 1fr !important; }
-  .future { padding: 80px 24px !important; }
-
-  /* Future Vision: mobile card stack */
-  #fv-home-header {
-    position: relative !important; top: auto !important;
-    padding: 24px 20px !important;
-    border-bottom: 1px solid rgba(255,255,255,0.07) !important;
-  }
-  #fv-home-header .section-title { font-size: clamp(24px, 5vw, 38px) !important; }
-  .fv-container { padding: 0 16px !important; }
-  .fv-arch { flex-direction: column !important; gap: 0 !important; }
-  .fv-arch__left { order: 1; }
-  .fv-arch__right { display: none !important; }
-  .fv-arch__info { height: auto !important; padding: 0 !important; display: block !important; place-items: unset !important; }
-  #home-fv-mobile, #page-fv-mobile {
-    padding: 20px 20px 36px !important;
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
-    gap: 12px !important;
-    background: var(--black) !important;
-  }
-
-  /* Featured Work */
-  .fw-header { padding: 60px 24px 40px !important; }
-  .fw-topbar { display: none !important; }
-  .fw-row { grid-template-columns: 1fr !important; min-height: auto !important; }
-  .fw-row-val { display: none !important; }
-  .fw-tagline { display: none !important; }
-
-  /* Case Studies */
-  .cs-grid { grid-template-columns: 1fr !important; }
-  .cs-item:first-child { grid-row: auto !important; }
-  .cs-full-grid { grid-template-columns: 1fr !important; }
-  .cs-stat-row { grid-template-columns: 1fr 1fr !important; gap: 16px !important; }
-
-  /* Journal */
-  .jnl-grid { grid-template-columns: 1fr !important; }
-  .jnl-grid .jcard:first-child { grid-column: auto !important; }
-  .jnl-full-grid { grid-template-columns: 1fr !important; }
-  .journal { padding: 80px 24px !important; }
-  .journal-header { flex-direction: column !important; align-items: flex-start !important; gap: 16px !important; margin-bottom: 40px !important; }
-  .jcard-excerpt { display: none !important; }
-  .jcard-date { display: none !important; }
-
-  /* Testimonials */
-  .testimonials { padding: 80px 24px !important; }
-  .testimonials-header { flex-direction: column !important; align-items: flex-start !important; gap: 16px !important; margin-bottom: 40px !important; }
-  .tcard { flex: 0 0 calc(100% - 0px) !important; }
-
-  /* Pricing */
-  .pricing { padding: 80px 24px !important; }
-  .pricing-grid { grid-template-columns: 1fr !important; gap: 16px !important; }
-  .price-card { padding: 28px 20px !important; }
-  .price-amt { font-size: 48px !important; }
-
-  /* Portfolio */
-  .portfolio { padding: 80px 24px !important; }
-  .portfolio-masonry { grid-template-columns: 1fr 1fr !important; grid-auto-rows: 240px !important; }
-  .port-item.port-wide { grid-column: span 2 !important; }
-
-  /* Blogs & Newsletter */
-  .blogs-newsletter { grid-template-columns: 1fr !important; }
-  .blogs-half { padding: 70px 24px !important; }
+  /* Section paddings: match mobile */
+  .about       { padding: 80px 24px !important; }
+  .services    { padding: 80px 24px !important; }
+  .studio      { padding: 80px 24px !important; }
+  .future      { padding: 80px 24px !important; }
+  .testimonials{ padding: 80px 24px !important; }
+  .casestudies { padding: 80px 24px !important; }
+  .journal     { padding: 80px 24px !important; }
+  .blogs-half,
   .newsletter-half { padding: 70px 24px !important; }
-
-  /* FAQ */
-  .faq-inner { grid-template-columns: 1fr !important; }
+  .cta         { padding: 100px 24px !important; }
+  footer       { padding: 60px 24px 30px !important; }
+  .pricing     { padding: 80px 24px !important; }
   .faq-section { padding: 80px 24px !important; }
-
-  /* CTA */
-  .cta { padding: 100px 24px !important; }
-  .cta-card { flex: 0 0 100% !important; max-width: 100% !important; }
-  .cta-zoom-wrapper { display: none !important; }
-
-  /* Contact */
-  .contact-grid { grid-template-columns: 1fr !important; gap: 50px !important; }
   .contact-section { padding: 80px 24px !important; }
-  .contact-form { order: 1 !important; padding: 32px 24px !important; }
-  .contact-info { order: 2 !important; }
-  .cf-row { grid-template-columns: 1fr !important; }
+  .inner-hero  { padding: 140px 24px 80px !important; }
+  .studio-equip{ padding: 80px 24px !important; }
 
-  /* Inner hero */
-  .inner-hero { padding: 120px 24px 60px !important; }
-  .inner-hero-h { font-size: clamp(48px, 9vw, 72px) !important; }
+  /* Layouts: collapse to mobile single-column */
+  .future-grid          { grid-template-columns: 1fr !important; }
+  .tcard                { flex: 0 0 calc(100% - 0px) !important; }
+  .jnl-grid             { grid-template-columns: 1fr !important; }
+  .jnl-grid .jcard:first-child { grid-column: span 1 !important; }
+  .jnl-full-grid        { grid-template-columns: 1fr !important; }
+  .cs-full-grid         { grid-template-columns: 1fr !important; }
+  .cs-stat-row          { grid-template-columns: repeat(2,1fr) !important; }
+  .pricing-grid         { grid-template-columns: 1fr !important; }
+  .footer-top           { grid-template-columns: 1fr !important; }
+  .blogs-newsletter     { grid-template-columns: 1fr !important; }
+  .contact-grid         { grid-template-columns: 1fr !important; gap: 50px !important; }
+  .equip-grid           { grid-template-columns: repeat(2,1fr) !important; }
+  .portfolio-masonry    { grid-template-columns: repeat(2,1fr) !important; grid-auto-rows: 200px !important; }
+  .studio-inner         { grid-template-columns: 1fr !important; gap: 40px !important; }
+  .studio-grid          { grid-template-columns: 1fr 1fr !important; }
 
-  /* Footer */
-  footer { padding: 60px 20px 30px !important; padding-top: 220px !important; }
-  .footer-parallax { height: 220px !important; }
-  .footer-top { grid-template-columns: 1fr !important; gap: 32px !important; }
-  .footer-bottom { flex-direction: column !important; align-items: flex-start !important; }
-  .footer-bar-item { font-size: 22px !important; }
-  .footer-bl { flex-wrap: wrap !important; gap: 14px !important; }
+  /* Featured work rows: stack on portrait tablet */
+  .fw-row {
+    grid-template-columns: 48px 1fr !important;
+    grid-template-rows: auto auto !important;
+    min-height: auto !important;
+  }
+  .fw-row-photo {
+    grid-column: 1/3 !important;
+    height: 200px !important;
+    border-left: none !important;
+    border-right: none !important;
+  }
+  .fw-row-metric {
+    grid-column: 1/3 !important;
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+    padding: 16px 24px !important;
+    border-top: 1px solid rgba(0,0,0,.08) !important;
+    gap: 12px !important;
+  }
+  .fw-row-arrow { margin-top: 0 !important; }
+  .fw-header { padding: 48px 24px 36px !important; }
+  .fw-topbar { padding: 12px 24px !important; }
+  .fw-stat-strip { grid-template-columns: 1fr 1fr !important; }
 
-  /* Section titles */
-  .section-title { font-size: clamp(34px, 7vw, 58px) !important; }
-  .fw-title { font-size: clamp(40px, 7vw, 72px) !important; }
+  /* Service bento: all full-width */
+  .svc-b.b-w3,.svc-b.b-w4,
+  .svc-b.b-w5,.svc-b.b-w6,
+  .svc-b.b-w7,.svc-b.b-w8 { grid-column: span 12 !important; }
+  .svc-b-desc { max-height: 80px !important; opacity: 1 !important; }
+  .svc-b-arrow { opacity: 1 !important; transform: translateY(0) !important; }
 
-  /* Service-page heroes: mobile overlay */
-  #wsv-hero-new, #wsv-hero-ecom, #inf-hero-new, #seo-hero-new, .pm-hero { position: relative !important; }
-  #wsv-hero-new .eyebrow, #wsv-hero-new .hero-h1, #wsv-hero-new .hero-sub, #wsv-hero-new .hero-btns,
-  #wsv-hero-ecom .eyebrow, #wsv-hero-ecom .hero-h1, #wsv-hero-ecom .hero-sub, #wsv-hero-ecom .hero-btns,
-  #inf-hero-new .eyebrow, #inf-hero-new .hero-h1, #inf-hero-new .hero-sub, #inf-hero-new .hero-btns,
-  #seo-hero-new .eyebrow, #seo-hero-new .hero-h1, #seo-hero-new .hero-sub, #seo-hero-new .hero-btns,
-  .pm-hero-label, .pm-hero-h1, .pm-hero-desc, .pm-hero-btns, .pm-hero-trust { display: none !important; }
-  .svc-mobile-hero { display: flex !important; }
+  /* Timeline: stack vertically */
+  .timeline-items { flex-wrap: wrap !important; }
+  .ti { flex: 0 0 50% !important; }
+
+  /* About: collapse to single column */
+  .about-inner { grid-template-columns: 1fr !important; }
+  .about-badge-circle { right: 10px !important; }
+  .about-float { left: 0 !important; }
+
+  /* Testimonials header */
+  .testimonials-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 16px !important;
+    margin-bottom: 48px !important;
+  }
+
+  /* CTA cards: two-per-row */
+  .cta-cards { gap: 14px !important; }
+  .cta-card  { flex: 0 0 calc(50% - 8px) !important; max-width: none !important; }
+
+  /* Studio reel */
+  .studio-reel { aspect-ratio: 16/9 !important; }
+
+  /* Home coverflow */
+  .hcf-list { width: 85vw !important; height: auto !important; }
+  .hcf-card { width: 85vw !important; height: auto !important; }
+
+  /* Future Vision home header */
+  #fv-home-header { top: 64px !important; }
+
+  /* Mobile services carousel: show; desktop coverflow: hide */
+  .mob-svc-carousel-wrap { display: flex !important; }
+  #pageSvcScrollWrapper,
+  #homeSvcScrollWrapper { display: none !important; }
 }
 
-/* ── TABLET LANDSCAPE: force full desktop layout ─────────────── */
-@media (min-width: 600px) and (max-width: 1366px) and (orientation: landscape) {
+/* ── TABLET LANDSCAPE: force desktop behavior ────
+   Targets tablets in landscape orientation where width
+   is typically 1024–1366px. Restore all desktop rules. */
+@media (min-width: 900px) and (max-width: 1366px) and (orientation: landscape) {
 
-  /* ── Navigation: desktop links, no hamburger ── */
+  /* Nav: show desktop links, hide hamburger */
   .nav-links { display: flex !important; }
   .ham { display: none !important; }
-  .mob-nav { display: none !important; }
+  nav { padding: 0 28px !important; }
+  .nav-links a, .nav-links button { padding: 8px 10px !important; font-size: 11px !important; }
 
-  /* ── Hero: desktop two-column layout ── */
-  .hero-right { display: flex !important; }
-  .mstrip-wrap { display: flex !important; }
-  .hero-mobile-bg { display: none !important; }
-  .hero-noise { display: block !important; }
-  .hero-orb { display: block !important; }
-  .hero-sub { display: block !important; }
-  .hero-stats { display: flex !important; }
-  .hero-scroll { display: flex !important; }
-  .hero-left {
-    position: static !important;
-    inset: unset !important;
-    padding: 130px 48px 80px !important;
-    align-items: flex-start !important;
-    text-align: left !important;
-    max-width: none !important;
-    margin: 0 !important;
-    gap: unset !important;
-  }
-  .hero-eyebrow {
-    position: static !important;
-    transform: none !important;
-    top: auto !important; left: auto !important;
-  }
-  .hero-h1 {
-    font-size: clamp(56px, 8vw, 120px) !important;
-    color: var(--white) !important;
-    white-space: normal !important;
-  }
-  .hero-h1 .or { color: var(--orange) !important; }
-  .hero-bottom-panel { display: none !important; }
-  .hero-btns {
-    flex-direction: row !important;
-    max-width: none !important;
-    margin: 0 !important;
-    gap: 12px !important;
-  }
-  .hero-btns .btn-arrow { display: inline-flex !important; }
-  .btn-p, .btn-s {
-    flex: 0 1 auto !important;
-    padding: 14px 28px !important;
-    font-size: 12px !important;
-    border-radius: 4px !important;
-    min-height: auto !important;
-    white-space: normal !important;
-  }
+  /* Hero: desktop layout restored */
+  .hero-left { padding: 130px 48px 80px !important; }
 
-  /* ── Services: hide mobile carousel, show desktop bento ── */
-  #homeSvcScrollWrapper { display: block !important; }
-  #pageSvcScrollWrapper { display: block !important; }
-  .mob-svc-carousel-wrap { display: none !important; }
-  #homeSvcCoverflowSection > .hcf-scroll-wrapper { display: block !important; }
-
-  /* ── Layout: restore desktop multi-column grids ── */
-  .about { grid-template-columns: 1fr 1fr !important; padding: 80px 40px !important; gap: 60px !important; }
-  .about-badge-circle { right: -12px !important; }
-  .about-float { left: 0 !important; top: auto !important; }
-
-  .studio-inner { grid-template-columns: 1fr 1fr !important; }
-  .studio { padding: 80px 40px !important; }
-  .studio-floats { position: absolute !important; right: -8px !important; }
-
-  .future-grid { grid-template-columns: repeat(2, 1fr) !important; }
-  .future { padding: 80px 40px !important; }
-
-  /* Future Vision: restore sticky desktop split */
-  #fv-home-header { position: sticky !important; top: 64px !important; padding: 20px 48px !important; border-bottom: none !important; }
-  #fv-home-header .section-title { font-size: unset !important; }
-  .fv-container { padding: 0 48px !important; }
-  .fv-arch { flex-direction: row !important; gap: unset !important; }
-  .fv-arch__right { display: block !important; }
-  .fv-arch__info { height: auto !important; padding: unset !important; display: grid !important; }
-  #home-fv-mobile, #page-fv-mobile { display: none !important; }
-
-  /* Featured Work */
-  .fw-header { padding: 60px 40px 40px !important; }
-  .fw-topbar { display: grid !important; padding: 14px 40px !important; }
-  .fw-row { grid-template-columns: 60px 1fr 220px 120px !important; min-height: 140px !important; }
-  .fw-row-val { display: flex !important; }
-  .fw-tagline { display: block !important; }
-
-  /* Case Studies */
-  .cs-grid { grid-template-columns: 1fr 1fr !important; }
-  .cs-item:first-child { grid-row: span 2 !important; }
-  .cs-full-grid { grid-template-columns: repeat(2, 1fr) !important; }
-  .cs-stat-row { grid-template-columns: repeat(2, 1fr) !important; }
-
-  /* Journal */
-  .jnl-grid { grid-template-columns: 1fr 1fr !important; }
-  .jnl-grid .jcard:first-child { grid-column: span 2 !important; }
-  .jnl-full-grid { grid-template-columns: 1fr 1fr !important; }
-  .journal { padding: 80px 40px !important; }
-  .journal-header { flex-direction: row !important; align-items: center !important; }
-  .jcard-excerpt { display: block !important; }
-  .jcard-date { display: block !important; }
-
-  /* Testimonials */
+  /* Section paddings: desktop values */
+  .about        { padding: 80px 40px !important; }
+  .services     { padding: 80px 40px !important; }
+  .studio       { padding: 80px 40px !important; }
+  .future       { padding: 80px 40px !important; }
   .testimonials { padding: 80px 40px !important; }
-  .testimonials-header { flex-direction: row !important; align-items: center !important; margin-bottom: 48px !important; }
-  .tcard { flex: 0 0 360px !important; }
+  .casestudies  { padding: 80px 40px !important; }
+  .journal      { padding: 80px 40px !important; }
+  .blogs-half,
+  .newsletter-half { padding: 80px 40px !important; }
+  .cta          { padding: 100px 40px !important; }
+  footer        { padding: 60px 40px 30px !important; padding-top: 260px !important; }
+  .pricing      { padding: 80px 40px !important; }
+  .faq-section  { padding: 80px 40px !important; }
+  .contact-section { padding: 80px 40px !important; }
+  .inner-hero   { padding: 140px 40px 80px !important; }
+  .studio-equip { padding: 80px 40px !important; }
 
-  /* Pricing */
-  .pricing { padding: 80px 40px !important; }
-  .pricing-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 16px !important; }
-  .price-card { padding: 32px 20px !important; }
-  .price-amt { font-size: 52px !important; }
-
-  /* Portfolio */
-  .portfolio { padding: 80px 40px !important; }
-  .portfolio-masonry { grid-template-columns: repeat(3, 1fr) !important; grid-auto-rows: 260px !important; }
+  /* Grid layouts: desktop multi-column */
+  .future-grid        { grid-template-columns: repeat(2,1fr) !important; }
+  .jnl-grid           { grid-template-columns: 1fr 1fr !important; }
+  .jnl-grid .jcard:first-child { grid-column: span 2 !important; }
+  .jnl-full-grid      { grid-template-columns: 1fr 1fr !important; }
+  .cs-full-grid       { grid-template-columns: repeat(2,1fr) !important; }
+  .cs-stat-row        { grid-template-columns: repeat(2,1fr) !important; gap: 16px !important; }
+  .pricing-grid       { grid-template-columns: repeat(3,1fr) !important; gap: 16px !important; }
+  .footer-top         { grid-template-columns: 1fr 1fr !important; gap: 40px !important; }
+  .blogs-newsletter   { grid-template-columns: 1fr !important; }
+  .contact-grid       { grid-template-columns: 1fr !important; gap: 50px !important; }
+  .equip-grid         { grid-template-columns: repeat(2,1fr) !important; }
+  .portfolio-masonry  {
+    grid-template-columns: repeat(2,1fr) !important;
+    grid-auto-rows: 260px !important;
+  }
   .port-item.port-wide { grid-column: span 2 !important; }
   .port-item.port-tall { grid-row: span 2 !important; }
+  .studio-inner       { grid-template-columns: 1fr 1fr !important; gap: 80px !important; }
 
-  /* Blogs & Newsletter */
-  .blogs-newsletter { grid-template-columns: 1fr 1fr !important; }
-  .blogs-half { padding: 80px 40px !important; }
-  .newsletter-half { padding: 80px 40px !important; }
+  /* Featured work rows: desktop layout */
+  .fw-row {
+    grid-template-columns: 60px 1fr 220px 120px !important;
+    min-height: 140px !important;
+  }
+  .fw-row-photo {
+    grid-column: auto !important;
+    height: auto !important;
+  }
+  .fw-row-metric {
+    grid-column: auto !important;
+    flex-direction: column !important;
+    padding: 28px 24px !important;
+    border-top: none !important;
+  }
+  .fw-header { padding: 60px 40px 40px !important; }
+  .fw-topbar { padding: 14px 40px !important; }
+  .fw-stat-strip { grid-template-columns: repeat(2,1fr) !important; }
 
-  /* FAQ */
-  .faq-inner { grid-template-columns: 1fr 1fr !important; }
-  .faq-section { padding: 80px 40px !important; }
+  /* Service bento: desktop widths */
+  .svc-b.b-w3,.svc-b.b-w4 { grid-column: span 6 !important; }
+  .svc-b.b-w5,.svc-b.b-w6,
+  .svc-b.b-w7,.svc-b.b-w8 { grid-column: span 12 !important; }
 
-  /* CTA */
-  .cta { padding: 100px 40px !important; }
-  .cta-card { flex: 0 0 calc(50% - 8px) !important; max-width: none !important; }
-  .cta-zoom-wrapper { display: block !important; }
+  /* Studio reel: tablet aspect */
+  .studio-reel { aspect-ratio: 4/3 !important; }
 
-  /* Contact */
-  .contact-grid { grid-template-columns: 1fr 1fr !important; gap: 60px !important; }
-  .contact-section { padding: 80px 40px !important; }
-  .contact-form { order: unset !important; padding: 36px 32px !important; }
-  .contact-info { order: unset !important; }
-  .cf-row { grid-template-columns: 1fr 1fr !important; }
+  /* Desktop services coverflow: show; mobile carousel: hide */
+  .mob-svc-carousel-wrap { display: none !important; }
+  #pageSvcScrollWrapper,
+  #homeSvcScrollWrapper { display: block !important; }
 
-  /* Inner hero */
-  .inner-hero { padding: 140px 40px 80px !important; }
-  .inner-hero-h { font-size: clamp(56px, 10vw, 100px) !important; }
+  /* Desktop contact form padding */
+  .contact-form { padding: 36px 32px !important; }
 
-  /* Footer */
-  footer { padding: 60px 40px 30px !important; padding-top: 260px !important; }
-  .footer-parallax { height: 260px !important; }
-  .footer-top { grid-template-columns: 1fr 1fr !important; gap: 40px !important; }
-  .footer-bottom { flex-direction: row !important; align-items: center !important; }
+  /* FAQ inner gap */
+  .faq-inner { gap: 60px !important; }
+
+  /* CTA cards: two-per-row */
+  .cta-cards { gap: 14px !important; }
+  .cta-card  { flex: 0 0 calc(50% - 8px) !important; max-width: none !important; }
+
+  /* Footer bar */
   .footer-bar-item { font-size: 28px !important; }
-  .footer-bl { flex-wrap: nowrap !important; }
-
-  /* Section titles */
-  .section-title { font-size: clamp(48px, 7vw, 100px) !important; }
-
-  /* Service-page heroes: restore desktop */
-  #wsv-hero-new .eyebrow, #wsv-hero-new .hero-h1, #wsv-hero-new .hero-sub, #wsv-hero-new .hero-btns,
-  #wsv-hero-ecom .eyebrow, #wsv-hero-ecom .hero-h1, #wsv-hero-ecom .hero-sub, #wsv-hero-ecom .hero-btns,
-  #inf-hero-new .eyebrow, #inf-hero-new .hero-h1, #inf-hero-new .hero-sub, #inf-hero-new .hero-btns,
-  #seo-hero-new .eyebrow, #seo-hero-new .hero-h1, #seo-hero-new .hero-sub, #seo-hero-new .hero-btns,
-  .pm-hero-label, .pm-hero-h1, .pm-hero-desc, .pm-hero-btns, .pm-hero-trust { display: revert !important; }
-  .svc-mobile-hero { display: none !important; }
 }
-
-/* ─────────────────────────────────────────────
-   END TABLET ORIENTATION FIX
-   ───────────────────────────────────────────── */

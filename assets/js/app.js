@@ -3950,72 +3950,167 @@ body{font-family:'DM Sans',sans-serif;background:#080808;color:#F5F0EB;line-heig
   }
 })();
 
-/* ═══════════════════════════════════════════════════════════════
-   TABLET ORIENTATION HANDLER
-   Refreshes GSAP ScrollTrigger when device rotates so that
-   pinned/animated sections (Future Vision split, etc.) correctly
-   re-initialise for portrait (mobile) or landscape (desktop).
-   ═══════════════════════════════════════════════════════════════ */
-(function () {
+/* ═══════════════════════════════════════════════════
+   TABLET ORIENTATION MANAGER
+   Seamlessly switches between mobile (portrait) and
+   desktop (landscape) behavior on iPad/tablets.
+   Tablet range: 600px–1366px device width.
+═══════════════════════════════════════════════════ */
+(function TabletOrientationManager() {
   'use strict';
 
   var TABLET_MIN = 600;
   var TABLET_MAX = 1366;
+  var DESKTOP_THRESHOLD = 900; // width at which landscape = desktop nav
 
-  function isTablet() {
+  /* ── Detect if we're on a tablet-range device ── */
+  function isTabletRange() {
     var w = window.innerWidth;
     var h = window.innerHeight;
-    // Consider it a tablet if either dimension is in the tablet range
-    // and the device has touch support
-    return ('ontouchstart' in window || navigator.maxTouchPoints > 0) &&
-      Math.max(w, h) <= TABLET_MAX && Math.min(w, h) >= TABLET_MIN;
+    var larger = Math.max(w, h);
+    var smaller = Math.min(w, h);
+    return larger >= TABLET_MIN && larger <= TABLET_MAX && smaller >= TABLET_MIN * 0.55;
   }
 
-  function isPortrait() {
-    // screen.orientation is more reliable than window.innerWidth on tablets
-    if (window.screen && window.screen.orientation && window.screen.orientation.type) {
-      return window.screen.orientation.type.indexOf('portrait') !== -1;
+  /* ── Current orientation ── */
+  function isLandscape() {
+    if (screen.orientation && screen.orientation.type) {
+      return screen.orientation.type.indexOf('landscape') !== -1;
     }
-    return window.innerHeight >= window.innerWidth;
+    // Fallback: compare dimensions
+    return window.innerWidth > window.innerHeight;
   }
 
-  var lastOrientation = null;
+  /* ── Apply a data attribute so CSS/JS can read orientation state ── */
+  function applyOrientationClass() {
+    if (!isTabletRange()) {
+      document.documentElement.removeAttribute('data-tablet-orient');
+      return;
+    }
+    var orient = isLandscape() ? 'landscape' : 'portrait';
+    document.documentElement.setAttribute('data-tablet-orient', orient);
+  }
 
-  function handleOrientationChange() {
-    if (!isTablet()) return;
-
-    var portrait = isPortrait();
-    if (portrait === lastOrientation) return; // no change
-    lastOrientation = portrait;
-
-    // Give the browser a frame to finish the resize/relayout
-    setTimeout(function () {
-      // Refresh GSAP ScrollTrigger instances so pinned sections
-      // recalculate their dimensions for the new orientation
-      if (window.ScrollTrigger) {
-        window.ScrollTrigger.refresh(true);
+  /* ── Close mobile nav if switching to landscape (desktop) ── */
+  function handleNavOnOrientationChange() {
+    if (!isTabletRange()) return;
+    if (isLandscape()) {
+      // Switching to desktop: close mobile drawer if open
+      var mobNav = document.getElementById('mobNav');
+      var ham    = document.getElementById('ham');
+      if (mobNav && mobNav.classList.contains('open')) {
+        mobNav.classList.remove('open');
+        if (ham) ham.classList.remove('active');
+        document.body.style.overflow = '';
       }
-    }, 300);
-  }
-
-  // Listen for both events for maximum compatibility
-  window.addEventListener('orientationchange', handleOrientationChange, { passive: true });
-
-  // matchMedia is more reliable on modern browsers
-  if (window.matchMedia) {
-    var mq = window.matchMedia('(orientation: portrait)');
-    if (mq.addEventListener) {
-      mq.addEventListener('change', handleOrientationChange);
-    } else if (mq.addListener) {
-      // Safari < 14 fallback
-      mq.addListener(handleOrientationChange);
     }
   }
 
-  // Initialise on load
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', handleOrientationChange);
-  } else {
-    handleOrientationChange();
+  /* ── Refresh services carousel vs coverflow on orientation change ── */
+  function handleServicesLayout() {
+    if (!isTabletRange()) return;
+
+    var carousel  = document.getElementById('pageMobSvcCarousel');
+    var coverflow = document.getElementById('pageSvcScrollWrapper');
+    var homeCf    = document.getElementById('homeSvcScrollWrapper');
+    var homeCar   = document.getElementById('homeMobSvcCarousel');
+
+    if (isLandscape()) {
+      // Landscape = desktop: show coverflow, hide carousel
+      if (carousel)  carousel.style.display = 'none';
+      if (coverflow) coverflow.style.display = '';
+      if (homeCf)    homeCf.style.display    = '';
+      if (homeCar)   homeCar.style.display   = 'none';
+    } else {
+      // Portrait = mobile: show carousel, hide coverflow
+      if (coverflow) coverflow.style.display = 'none';
+      if (homeCf)    homeCf.style.display    = 'none';
+      // Carousel display is handled by CSS portrait rule;
+      // trigger a resize event so existing JS handlers pick it up
+    }
   }
+
+  /* ── Refresh Future Vision (FV) mobile/desktop widgets ── */
+  function handleFvLayout() {
+    if (!isTabletRange()) return;
+
+    var desktopHome = document.getElementById('fvContainer');
+    var mobHome     = document.getElementById('home-fv-mobile');
+    var desktopPage = document.getElementById('fvContainerPage');
+    var mobPage     = document.getElementById('page-fv-mobile');
+
+    if (isLandscape()) {
+      // Landscape = desktop FV
+      if (desktopHome) desktopHome.style.display = '';
+      if (mobHome)     { mobHome.style.display = 'none'; mobHome.dataset.built = ''; mobHome.innerHTML = ''; }
+      if (desktopPage) desktopPage.style.display = '';
+      if (mobPage)     { mobPage.style.display = 'none'; mobPage.dataset.built = ''; mobPage.innerHTML = ''; }
+    }
+    // Portrait: the existing resize handler at innerWidth <= 768 won't fire
+    // for tablets (768–1100px), so we nudge it via a synthetic resize below.
+  }
+
+  /* ── Refresh GSAP ScrollTrigger if available ── */
+  function refreshScrollTrigger() {
+    setTimeout(function() {
+      if (typeof ScrollTrigger !== 'undefined') {
+        ScrollTrigger.refresh();
+      }
+    }, 350);
+  }
+
+  /* ── Master handler called on every orientation/resize event ── */
+  function onOrientationChange() {
+    applyOrientationClass();
+    handleNavOnOrientationChange();
+    handleServicesLayout();
+    handleFvLayout();
+    refreshScrollTrigger();
+
+    // Dispatch a synthetic resize so any third-party or inline handlers
+    // that gate on window.innerWidth re-evaluate with the new dimensions.
+    // We delay to let the browser finish updating layout dimensions first.
+    setTimeout(function() {
+      try {
+        window.dispatchEvent(new Event('resize'));
+      } catch(e) {
+        // IE fallback
+        var ev = document.createEvent('Event');
+        ev.initEvent('resize', true, true);
+        window.dispatchEvent(ev);
+      }
+    }, 100);
+  }
+
+  /* ── Debounced resize listener ── */
+  var resizeTimer;
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(onOrientationChange, 120);
+  }, { passive: true });
+
+  /* ── Native orientation change event (fires on real devices) ── */
+  window.addEventListener('orientationchange', function() {
+    // orientationchange fires before dimensions are final; wait a tick
+    setTimeout(onOrientationChange, 150);
+  }, { passive: true });
+
+  /* ── screen.orientation API (modern browsers) ── */
+  if (screen.orientation && screen.orientation.addEventListener) {
+    screen.orientation.addEventListener('change', function() {
+      setTimeout(onOrientationChange, 150);
+    });
+  }
+
+  /* ── Boot: apply immediately on load ── */
+  applyOrientationClass();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      applyOrientationClass();
+      handleServicesLayout();
+    });
+  } else {
+    handleServicesLayout();
+  }
+
 })();
