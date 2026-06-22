@@ -3949,3 +3949,73 @@ body{font-family:'DM Sans',sans-serif;background:#080808;color:#F5F0EB;line-heig
     setTimeout(boot, 150);
   }
 })();
+
+/* ═══════════════════════════════════════════════════════════════
+   TABLET ORIENTATION HANDLER
+   Refreshes GSAP ScrollTrigger when device rotates so that
+   pinned/animated sections (Future Vision split, etc.) correctly
+   re-initialise for portrait (mobile) or landscape (desktop).
+   ═══════════════════════════════════════════════════════════════ */
+(function () {
+  'use strict';
+
+  var TABLET_MIN = 600;
+  var TABLET_MAX = 1366;
+
+  function isTablet() {
+    var w = window.innerWidth;
+    var h = window.innerHeight;
+    // Consider it a tablet if either dimension is in the tablet range
+    // and the device has touch support
+    return ('ontouchstart' in window || navigator.maxTouchPoints > 0) &&
+      Math.max(w, h) <= TABLET_MAX && Math.min(w, h) >= TABLET_MIN;
+  }
+
+  function isPortrait() {
+    // screen.orientation is more reliable than window.innerWidth on tablets
+    if (window.screen && window.screen.orientation && window.screen.orientation.type) {
+      return window.screen.orientation.type.indexOf('portrait') !== -1;
+    }
+    return window.innerHeight >= window.innerWidth;
+  }
+
+  var lastOrientation = null;
+
+  function handleOrientationChange() {
+    if (!isTablet()) return;
+
+    var portrait = isPortrait();
+    if (portrait === lastOrientation) return; // no change
+    lastOrientation = portrait;
+
+    // Give the browser a frame to finish the resize/relayout
+    setTimeout(function () {
+      // Refresh GSAP ScrollTrigger instances so pinned sections
+      // recalculate their dimensions for the new orientation
+      if (window.ScrollTrigger) {
+        window.ScrollTrigger.refresh(true);
+      }
+    }, 300);
+  }
+
+  // Listen for both events for maximum compatibility
+  window.addEventListener('orientationchange', handleOrientationChange, { passive: true });
+
+  // matchMedia is more reliable on modern browsers
+  if (window.matchMedia) {
+    var mq = window.matchMedia('(orientation: portrait)');
+    if (mq.addEventListener) {
+      mq.addEventListener('change', handleOrientationChange);
+    } else if (mq.addListener) {
+      // Safari < 14 fallback
+      mq.addListener(handleOrientationChange);
+    }
+  }
+
+  // Initialise on load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', handleOrientationChange);
+  } else {
+    handleOrientationChange();
+  }
+})();
