@@ -1310,10 +1310,11 @@ function openCaseStudy(id) {
   if (!document.getElementById('cs-overlay')) {
     const shell = document.createElement('div');
     shell.id = 'cs-overlay';
-    /* position:absolute (not fixed) so the browser's own <html> element is the scroller.
-       The article expands naturally in document flow and the native vertical scrollbar is used. */
-    shell.style.cssText = 'display:none;position:absolute;top:0;left:0;width:100%;min-height:100%;z-index:99999;background:#080808;';
-    document.body.appendChild(shell);
+    /* Appended to <html> (documentElement), not <body>.
+       position:absolute so it sits in normal document flow — <html> is the scroller.
+       The browser draws its own native scrollbar for <html>, which is the main page scrollbar. */
+    shell.style.cssText = 'display:none;position:absolute;top:0;left:0;width:100%;z-index:99999;background:#080808;';
+    document.documentElement.appendChild(shell);
   }
   const overlay = document.getElementById('cs-overlay');
 
@@ -1394,16 +1395,13 @@ function openCaseStudy(id) {
 
   /* ── Show overlay ── */
   overlay.style.display = 'block';
-  /* Body-scroll-lock pin: save current scroll Y, fix body at that negative offset.
-     This prevents background scroll without locking overflow on <html>, so the
-     browser's native scrollbar stays active for the overlay's document-flow content. */
-  const scrollY = window.scrollY || window.pageYOffset;
-  document.body.style.position = 'fixed';
-  document.body.style.top = '-' + scrollY + 'px';
-  document.body.style.width = '100%';
-  document.body.dataset.csScrollY = scrollY;
-  window.scrollTo(0, 0);
-  if (window.lenis) window.lenis.stop();
+  /* Scroll <html> to top so article starts at the top */
+  document.documentElement.scrollTop = 0;
+  /* Hide body content behind the overlay — does NOT affect <html> scroll */
+  document.body.style.visibility = 'hidden';
+  /* Destroy Lenis fully — lenis.stop() leaves its wheel preventDefault() on window
+     which blocks all mouse-wheel input. Must destroy so wheel events reach the browser. */
+  if (window.lenis) { window.lenis.destroy(); window.lenis = null; }
 
   /* ── Wire close buttons ── */
   function closeHandler() { closeCaseStudy(); }
@@ -1419,14 +1417,8 @@ function closeCaseStudy() {
   const overlay = document.getElementById('cs-overlay');
   if (!overlay || overlay.style.display === 'none') return;
   overlay.style.display = 'none';
-  /* Unpin body and restore scroll position to where the user was before opening */
-  const savedScrollY = parseInt(document.body.dataset.csScrollY || '0', 10);
-  document.body.style.position = '';
-  document.body.style.top = '';
-  document.body.style.width = '';
-  delete document.body.dataset.csScrollY;
-  window.scrollTo(0, savedScrollY);
-  if (window.lenis) window.lenis.start();
+  document.body.style.visibility = '';
+  if (window._initLenis) { window._initLenis(); }
   if (overlay._keyHandler) { document.removeEventListener('keydown', overlay._keyHandler); overlay._keyHandler = null; }
 
   /* Restore URL to /casestudies (or /case-studies if that was the entry point) */
@@ -1450,13 +1442,8 @@ window.addEventListener('popstate', function(e) {
     /* Back to listing */
     if (overlay.style.display !== 'none') {
       overlay.style.display = 'none';
-      const savedScrollY = parseInt(document.body.dataset.csScrollY || '0', 10);
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.width = '';
-      delete document.body.dataset.csScrollY;
-      window.scrollTo(0, savedScrollY);
-      if (window.lenis) window.lenis.start();
+      document.body.style.visibility = '';
+      if (window._initLenis) { window._initLenis(); }
       if (overlay._keyHandler) { document.removeEventListener('keydown', overlay._keyHandler); overlay._keyHandler = null; }
       document.title = 'Case Studies — The Sonic Media';
     }
@@ -3395,6 +3382,7 @@ function buildMobSvcCarousel(ids) {
     requestAnimationFrame(raf);
   }
   initLenis();
+  window._initLenis = initLenis; // expose so closeCaseStudy can reinitialise
 
   /* ── 2. IntersectionObserver Reveal System ── */
   const IO_OPTIONS = { threshold: 0.08, rootMargin: '0px 0px -32px 0px' };
