@@ -1397,13 +1397,11 @@ function openCaseStudy(id) {
      On desktop it is NOT needed — the overlay scrolls itself via overflow-y:auto.
      Critically, Lenis must be stopped on desktop; it attaches a wheel listener to window
      and calls preventDefault(), which blocks the overlay's internal scroll entirely. */
-  if (window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
-    /* Desktop: pause Lenis only — do NOT set body overflow hidden */
-    if (window.lenis) window.lenis.stop();
-  } else {
-    /* Touch (mobile/tablet): block background body scroll, Lenis already has smoothTouch:false */
-    document.body.style.overflow = 'hidden';
-  }
+  /* Always lock body scroll — prevents the main-document scrollbar from rendering
+     alongside the overlay's own scrollbar (the double-scrollbar bug on desktop).
+     On desktop Lenis is also stopped so its wheel listener does not fight the overlay. */
+  if (window.lenis) window.lenis.stop();
+  document.body.style.overflow = 'hidden';
 
   /* ── Wire close buttons ── */
   function closeHandler() { closeCaseStudy(); }
@@ -1419,12 +1417,9 @@ function closeCaseStudy() {
   const overlay = document.getElementById('cs-overlay');
   if (!overlay || overlay.style.display === 'none') return;
   overlay.style.display = 'none';
-  /* Mirror the open logic: resume Lenis on desktop, clear body overflow on touch */
-  if (window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
-    if (window.lenis) window.lenis.start();
-  } else {
-    document.body.style.overflow = '';
-  }
+  /* Mirror the open fix: resume Lenis and restore body scroll in all cases */
+  if (window.lenis) window.lenis.start();
+  document.body.style.overflow = '';
   if (overlay._keyHandler) { document.removeEventListener('keydown', overlay._keyHandler); overlay._keyHandler = null; }
 
   /* Restore URL to /casestudies (or /case-studies if that was the entry point) */
@@ -1448,11 +1443,8 @@ window.addEventListener('popstate', function(e) {
     /* Back to listing */
     if (overlay.style.display !== 'none') {
       overlay.style.display = 'none';
-      if (window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
-        if (window.lenis) window.lenis.start();
-      } else {
-        document.body.style.overflow = '';
-      }
+      if (window.lenis) window.lenis.start();
+      document.body.style.overflow = '';
       if (overlay._keyHandler) { document.removeEventListener('keydown', overlay._keyHandler); overlay._keyHandler = null; }
       document.title = 'Case Studies — The Sonic Media';
     }
