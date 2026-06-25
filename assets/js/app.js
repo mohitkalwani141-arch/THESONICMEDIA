@@ -1395,12 +1395,14 @@ function openCaseStudy(id) {
 
   /* ── Show overlay ── */
   overlay.style.display = 'block';
-  /* Scroll <html> to top so article starts at the top */
   document.documentElement.scrollTop = 0;
-  /* Hide body content behind the overlay — does NOT affect <html> scroll */
   document.body.style.visibility = 'hidden';
-  /* Destroy Lenis fully — lenis.stop() leaves its wheel preventDefault() on window
-     which blocks all mouse-wheel input. Must destroy so wheel events reach the browser. */
+  /* Move cursor elements to <html> so they share the overlay's stacking context
+     and their z-index (up to 9999999) renders above the overlay (99999) */
+  ['cursor','cursor-follower','cursor-trail','mouse-glow'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) document.documentElement.appendChild(el);
+  });
   if (window.lenis) { window.lenis.destroy(); window.lenis = null; }
 
   /* ── Wire close buttons ── */
@@ -1418,6 +1420,11 @@ function closeCaseStudy() {
   if (!overlay || overlay.style.display === 'none') return;
   overlay.style.display = 'none';
   document.body.style.visibility = '';
+  /* Move cursor elements back to <body> */
+  ['cursor','cursor-follower','cursor-trail','mouse-glow'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) document.body.appendChild(el);
+  });
   if (window._initLenis) { window._initLenis(); }
   if (overlay._keyHandler) { document.removeEventListener('keydown', overlay._keyHandler); overlay._keyHandler = null; }
 
@@ -1443,6 +1450,10 @@ window.addEventListener('popstate', function(e) {
     if (overlay.style.display !== 'none') {
       overlay.style.display = 'none';
       document.body.style.visibility = '';
+      ['cursor','cursor-follower','cursor-trail','mouse-glow'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) document.body.appendChild(el);
+      });
       if (window._initLenis) { window._initLenis(); }
       if (overlay._keyHandler) { document.removeEventListener('keydown', overlay._keyHandler); overlay._keyHandler = null; }
       document.title = 'Case Studies — The Sonic Media';
