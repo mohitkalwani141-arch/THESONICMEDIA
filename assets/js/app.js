@@ -1310,7 +1310,9 @@ function openCaseStudy(id) {
   if (!document.getElementById('cs-overlay')) {
     const shell = document.createElement('div');
     shell.id = 'cs-overlay';
-    shell.style.cssText = 'display:none;position:fixed;inset:0;z-index:99999;background:#080808;overflow-y:auto;-webkit-overflow-scrolling:touch;';
+    /* position:absolute (not fixed) so the browser's own <html> element is the scroller.
+       The article expands naturally in document flow and the native vertical scrollbar is used. */
+    shell.style.cssText = 'display:none;position:absolute;top:0;left:0;width:100%;min-height:100%;z-index:99999;background:#080808;';
     document.body.appendChild(shell);
   }
   const overlay = document.getElementById('cs-overlay');
@@ -1392,16 +1394,16 @@ function openCaseStudy(id) {
 
   /* ── Show overlay ── */
   overlay.style.display = 'block';
-  overlay.scrollTop = 0;
-  /* On touch devices body overflow:hidden prevents background scroll behind the fixed overlay.
-     On desktop it is NOT needed — the overlay scrolls itself via overflow-y:auto.
-     Critically, Lenis must be stopped on desktop; it attaches a wheel listener to window
-     and calls preventDefault(), which blocks the overlay's internal scroll entirely. */
-  /* Always lock body scroll — prevents the main-document scrollbar from rendering
-     alongside the overlay's own scrollbar (the double-scrollbar bug on desktop).
-     On desktop Lenis is also stopped so its wheel listener does not fight the overlay. */
+  /* Body-scroll-lock pin: save current scroll Y, fix body at that negative offset.
+     This prevents background scroll without locking overflow on <html>, so the
+     browser's native scrollbar stays active for the overlay's document-flow content. */
+  const scrollY = window.scrollY || window.pageYOffset;
+  document.body.style.position = 'fixed';
+  document.body.style.top = '-' + scrollY + 'px';
+  document.body.style.width = '100%';
+  document.body.dataset.csScrollY = scrollY;
+  window.scrollTo(0, 0);
   if (window.lenis) window.lenis.stop();
-  document.body.style.overflow = 'hidden';
 
   /* ── Wire close buttons ── */
   function closeHandler() { closeCaseStudy(); }
@@ -1417,9 +1419,14 @@ function closeCaseStudy() {
   const overlay = document.getElementById('cs-overlay');
   if (!overlay || overlay.style.display === 'none') return;
   overlay.style.display = 'none';
-  /* Mirror the open fix: resume Lenis and restore body scroll in all cases */
+  /* Unpin body and restore scroll position to where the user was before opening */
+  const savedScrollY = parseInt(document.body.dataset.csScrollY || '0', 10);
+  document.body.style.position = '';
+  document.body.style.top = '';
+  document.body.style.width = '';
+  delete document.body.dataset.csScrollY;
+  window.scrollTo(0, savedScrollY);
   if (window.lenis) window.lenis.start();
-  document.body.style.overflow = '';
   if (overlay._keyHandler) { document.removeEventListener('keydown', overlay._keyHandler); overlay._keyHandler = null; }
 
   /* Restore URL to /casestudies (or /case-studies if that was the entry point) */
@@ -1443,8 +1450,13 @@ window.addEventListener('popstate', function(e) {
     /* Back to listing */
     if (overlay.style.display !== 'none') {
       overlay.style.display = 'none';
+      const savedScrollY = parseInt(document.body.dataset.csScrollY || '0', 10);
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      delete document.body.dataset.csScrollY;
+      window.scrollTo(0, savedScrollY);
       if (window.lenis) window.lenis.start();
-      document.body.style.overflow = '';
       if (overlay._keyHandler) { document.removeEventListener('keydown', overlay._keyHandler); overlay._keyHandler = null; }
       document.title = 'Case Studies — The Sonic Media';
     }
