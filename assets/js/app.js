@@ -1305,84 +1305,21 @@ const caseStudies = {
 function openCaseStudy(id) {
   const cs = caseStudies[id];
   if (!cs) return;
-  const win = window.open('', '_blank');
-  const html = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${cs.title} — The Sonic Media</title>
-<meta name="description" content="${cs.subtitle}">
-<link rel="icon" type="image/jpeg" href="${cs.images[0].url.split('?')[0]}?w=32&h=32&fit=crop">
-<meta property="og:type" content="article">
-<meta property="og:site_name" content="The Sonic Media">
-<meta property="og:title" content="${cs.title}">
-<meta property="og:description" content="${cs.subtitle}">
-<meta property="og:image" content="${cs.images[0].url.replace(/w=\d+/,'w=1200')}&h=630&fit=crop">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="${cs.title}">
-<meta property="og:locale" content="en_IN">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:site" content="@thesonicmedia">
-<meta name="twitter:title" content="${cs.title}">
-<meta name="twitter:description" content="${cs.subtitle}">
-<meta name="twitter:image" content="${cs.images[0].url.replace(/w=\d+/,'w=1200')}&h=630&fit=crop">
-<meta name="robots" content="index, follow">
-<meta name="author" content="The Sonic Media">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Article",
-      "@id": "https://thesonicmedia.com/casestudies#${id}",
-      "headline": "${cs.title.replace(/"/g,'\\"')}",
-      "description": "${cs.subtitle.replace(/"/g,'\\"')}",
-      "image": {
-        "@type": "ImageObject",
-        "url": "${cs.images[0].url}",
-        "width": 1200,
-        "height": 630
-      },
-      "author": {
-        "@type": "Organization",
-        "name": "The Sonic Media",
-        "url": "https://thesonicmedia.com"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "The Sonic Media",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://res.cloudinary.com/dq2nrpky0/image/upload/v1779787887/favicon_oalxfi.png"
-        }
-      },
-      "datePublished": "${cs.date}",
-      "dateModified": "${cs.date}",
-      "mainEntityOfPage": "https://thesonicmedia.com/casestudies",
-      "articleSection": "${cs.category}",
-      "keywords": "${cs.category}, case study, digital marketing India, The Sonic Media"
-    },
-    {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {"@type":"ListItem","position":1,"name":"Home","item":"https://thesonicmedia.com/"},
-        {"@type":"ListItem","position":2,"name":"Case Studies","item":"https://thesonicmedia.com/casestudies"},
-        {"@type":"ListItem","position":3,"name":"${cs.title.replace(/"/g,'\\"')}"}
-      ]
-    }
-  ]
-}
-<\/script>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500&display=swap" rel="stylesheet">
-<style>
+
+  /* ── Inject overlay shell once ── */
+  if (!document.getElementById('cs-overlay')) {
+    const shell = document.createElement('div');
+    shell.id = 'cs-overlay';
+    shell.style.cssText = 'display:none;position:fixed;inset:0;z-index:99999;background:#080808;overflow-y:auto;-webkit-overflow-scrolling:touch;';
+    document.body.appendChild(shell);
+  }
+  const overlay = document.getElementById('cs-overlay');
+
+  /* ── Build inner HTML ── */
+  overlay.innerHTML = `<style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-html{font-size:16px;scroll-behavior:smooth;}
-body{font-family:'DM Sans',sans-serif;background:#080808;color:#F5F0EB;line-height:1.7;min-height:100vh;}
 .cs-nav{position:sticky;top:0;z-index:100;background:rgba(8,8,8,.93);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06);padding:0 48px;height:68px;display:flex;align-items:center;justify-content:space-between;}
 .cs-brand{display:flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:14px;font-weight:800;letter-spacing:.04em;color:#F5F0EB;}
-.cs-brand-mark{width:34px;height:34px;border-radius:8px;background:#FF5C00;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:17px;color:#fff;}
 .cs-close{padding:8px 20px;border-radius:50px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(245,240,235,.6);font-family:'Syne',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;}
 .cs-close:hover{background:rgba(255,92,0,.15);border-color:rgba(255,92,0,.35);color:#FF5C00;}
 .cs-hero{padding:90px 72px 72px;background:#0f0f0f;position:relative;overflow:hidden;}
@@ -1398,10 +1335,11 @@ body{font-family:'DM Sans',sans-serif;background:#080808;color:#F5F0EB;line-heig
 .cs-img-cap{font-family:'Syne',sans-serif;font-size:12px;font-weight:600;color:rgba(245,240,235,.4);letter-spacing:.06em;margin-bottom:40px;padding-left:4px;}
 .cs-article{font-size:17px;line-height:1.9;color:rgba(245,240,235,.72);font-weight:300;padding:44px;border-radius:16px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.05);}
 .cs-article::first-letter{font-family:'Bebas Neue',sans-serif;font-size:72px;line-height:.8;float:left;margin-right:12px;margin-top:6px;color:#FF5C00;}
+.cs-article p{margin-bottom:20px;}
 .cs-footer{border-top:1px solid rgba(255,255,255,.05);padding:32px 72px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
 .cs-footer-copy{font-size:13px;color:#666;}
 .cs-footer-copy span{color:#FF5C00;}
-.cs-back{display:inline-flex;align-items:center;gap:8px;font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:#FF5C00;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:gap .25s;}
+.cs-back{display:inline-flex;align-items:center;gap:8px;font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:#FF5C00;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:gap .25s;background:none;border:none;}
 .cs-back:hover{gap:14px;}
 .cs-cta-band{background:#0f0f0f;border-top:1px solid rgba(255,92,0,.15);border-bottom:1px solid rgba(255,92,0,.15);padding:64px 72px;text-align:center;position:relative;overflow:hidden;}
 .cs-cta-band::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:300px;background:radial-gradient(ellipse,rgba(255,92,0,.09) 0%,transparent 70%);pointer-events:none;}
@@ -1411,25 +1349,22 @@ body{font-family:'DM Sans',sans-serif;background:#080808;color:#F5F0EB;line-heig
 .cs-cta-h span{color:#FF5C00;}
 .cs-cta-p{font-size:15px;line-height:1.75;color:rgba(245,240,235,.55);font-weight:300;max-width:480px;margin:0 auto 36px;}
 .cs-cta-btn{display:inline-flex;align-items:center;gap:10px;background:#FF5C00;color:#fff;padding:16px 38px;border-radius:50px;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;letter-spacing:.04em;text-decoration:none;position:relative;overflow:hidden;box-shadow:0 0 30px rgba(255,92,0,.4);transition:all .3s;}
-.cs-cta-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);transform:translateX(-100%);transition:transform .5s;}
-.cs-cta-btn:hover::before{transform:translateX(100%);}
 .cs-cta-btn:hover{transform:translateY(-3px);box-shadow:0 0 50px rgba(255,92,0,.65);}
-@media(max-width:768px){.cs-nav,.cs-footer{padding-left:20px;padding-right:20px;}.cs-hero{padding:60px 20px 48px;}.cs-body{padding:40px 20px 80px;}.cs-article{padding:28px;}.cs-cta-band{padding:48px 24px;}}
+@media(max-width:768px){.cs-nav,.cs-footer{padding-left:20px;padding-right:20px;}.cs-hero{padding:60px 20px 48px;}.cs-body{padding:40px 20px 80px;}.cs-article{padding:28px;font-size:15px;}.cs-cta-band{padding:48px 24px;}}
 </style>
-</head>
-<body>
 <nav class="cs-nav">
   <div class="cs-brand"><img src="https://res.cloudinary.com/dq2nrpky0/image/upload/v1779787887/favicon_oalxfi.png" alt="The Sonic Media Logo" style="width:34px;height:34px;object-fit:contain;flex-shrink:0;" />THE SONIC MEDIA</div>
-  <button class="cs-close" onclick="window.close()">✕ Close</button>
+  <button class="cs-close" id="cs-close-btn">✕ Close</button>
 </nav>
 <div class="cs-hero">
+  <div class="cs-eyebrow">${cs.category}</div>
   <h1 class="cs-h1">${cs.title.split(' ').slice(0,5).join(' ')}<br><span>${cs.title.split(' ').slice(5).join(' ')}</span></h1>
   <div class="cs-meta">${cs.date} &nbsp;·&nbsp; The Sonic Media &nbsp;·&nbsp; ${cs.category}</div>
 </div>
 <div class="cs-body">
-  <div class="cs-img-wrap"><img src="${cs.images[0].url}" alt="${cs.title}"></div>
+  <div class="cs-img-wrap"><img src="${cs.images[0].url}" alt="${cs.title}" loading="lazy"></div>
   <div class="cs-img-cap">${cs.images[0].caption}</div>
-  <div class="cs-img-wrap"><img src="${cs.images[1].url}" alt="${cs.subtitle}"></div>
+  <div class="cs-img-wrap"><img src="${cs.images[1].url}" alt="${cs.subtitle}" loading="lazy"></div>
   <div class="cs-img-cap">${cs.images[1].caption}</div>
   <div class="cs-article">${cs.body}</div>
 </div>
@@ -1437,17 +1372,100 @@ body{font-family:'DM Sans',sans-serif;background:#080808;color:#F5F0EB;line-heig
   <div class="cs-cta-eyebrow">Ready to Grow?</div>
   <div class="cs-cta-h">Work With <span>The Sonic Media</span></div>
   <p class="cs-cta-p">Let's build your brand's next growth chapter together — strategy, content, performance, and technology under one roof.</p>
-  <a class="cs-cta-btn" href="https://thesonicmedia.com" onclick="window.opener && window.opener.navigate && window.opener.navigate('contact'); this.href='javascript:void(0)'; return false;" target="_self">Get a Strategy Call →</a>
+  <a class="cs-cta-btn" href="#" onclick="closeCaseStudy();window.navigate&&window.navigate('contact');return false;">Get a Strategy Call →</a>
 </div>
 <div class="cs-footer">
   <div class="cs-footer-copy">© 2026 <span>The Sonic Media</span>. All rights reserved.</div>
-  <span class="cs-back" onclick="window.close()">← Back to Website</span>
-</div>
-</body>
-</html>`;
-  win.document.write(html);
-  win.document.close();
+  <button class="cs-back" id="cs-back-btn">← Back to Case Studies</button>
+</div>`;
+
+  /* ── Update URL & meta ── */
+  const cleanSlug = id;
+  const newUrl = '/case-studies/' + cleanSlug;
+  history.pushState({ caseStudy: id }, cs.title + ' — The Sonic Media', newUrl);
+  document.title = cs.title + ' — The Sonic Media';
+
+  /* Update canonical tag */
+  let canonical = document.querySelector('link[rel="canonical"]');
+  if (!canonical) { canonical = document.createElement('link'); canonical.rel = 'canonical'; document.head.appendChild(canonical); }
+  canonical.href = 'https://thesonicmedia.com/case-studies/' + cleanSlug;
+
+  /* ── Show overlay ── */
+  overlay.style.display = 'block';
+  overlay.scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+
+  /* ── Wire close buttons ── */
+  function closeHandler() { closeCaseStudy(); }
+  document.getElementById('cs-close-btn').addEventListener('click', closeHandler);
+  document.getElementById('cs-back-btn').addEventListener('click', closeHandler);
+
+  /* ── Keyboard close ── */
+  overlay._keyHandler = function(e) { if (e.key === 'Escape') closeCaseStudy(); };
+  document.addEventListener('keydown', overlay._keyHandler);
 }
+
+function closeCaseStudy() {
+  const overlay = document.getElementById('cs-overlay');
+  if (!overlay || overlay.style.display === 'none') return;
+  overlay.style.display = 'none';
+  document.body.style.overflow = '';
+  if (overlay._keyHandler) { document.removeEventListener('keydown', overlay._keyHandler); overlay._keyHandler = null; }
+
+  /* Restore URL to /casestudies (or /case-studies if that was the entry point) */
+  const backUrl = '/case-studies';
+  history.pushState({ caseStudy: null }, 'Case Studies — The Sonic Media', backUrl);
+  document.title = 'Case Studies — The Sonic Media';
+
+  /* Restore canonical */
+  let canonical = document.querySelector('link[rel="canonical"]');
+  if (canonical) canonical.href = 'https://thesonicmedia.com/casestudies';
+}
+
+/* ── Handle browser back/forward through case study URLs ── */
+window.addEventListener('popstate', function(e) {
+  const overlay = document.getElementById('cs-overlay');
+  if (!overlay) return;
+  if (e.state && e.state.caseStudy) {
+    /* Forward into an article */
+    openCaseStudy(e.state.caseStudy);
+  } else {
+    /* Back to listing */
+    if (overlay.style.display !== 'none') {
+      overlay.style.display = 'none';
+      document.body.style.overflow = '';
+      if (overlay._keyHandler) { document.removeEventListener('keydown', overlay._keyHandler); overlay._keyHandler = null; }
+      document.title = 'Case Studies — The Sonic Media';
+    }
+  }
+});
+
+/* ── On direct URL load: /case-studies/<slug> → auto-open article ── */
+(function detectCaseStudySlugOnLoad() {
+  /* Works whether the page is served at /casestudies or /case-studies/:slug */
+  const path = window.location.pathname;
+  const match = path.match(/\/case-studies\/([^/]+)\/?$/);
+  if (match) {
+    const slug = match[1];
+    /* Wait for DOM + data to be ready */
+    function tryOpen() {
+      if (typeof caseStudies !== 'undefined' && caseStudies[slug]) {
+        openCaseStudy(slug);
+      } else if (typeof caseStudies !== 'undefined') {
+        /* slug not found — fall back to listing */
+        history.replaceState({}, 'Case Studies — The Sonic Media', '/case-studies');
+      } else {
+        setTimeout(tryOpen, 50);
+      }
+    }
+    /* If DOM is already ready, open immediately; otherwise wait */
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', tryOpen);
+    } else {
+      tryOpen();
+    }
+  }
+})();
 
 /* ═══════════════════════════════════════════════════
    BLOG ARTICLES — FULL CONTENT (SEO/AEO/GEO OPTIMISED)

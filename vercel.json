@@ -20,5 +20,9 @@
     { "source": "/services/content.html",  "destination": "/services/content",  "permanent": true },
     { "source": "/services/brand.html",    "destination": "/services/brand",    "permanent": true },
     { "source": "/services/ai.html",       "destination": "/services/ai",       "permanent": true }
+  ],
+  "rewrites": [
+    { "source": "/case-studies/:slug", "destination": "/casestudies" },
+    { "source": "/case-studies",       "destination": "/casestudies" }
   ]
 }
