@@ -23,6 +23,7 @@
   ],
   "rewrites": [
     { "source": "/case-studies/:slug", "destination": "/casestudies" },
-    { "source": "/case-studies",       "destination": "/casestudies" }
+    { "source": "/case-studies",       "destination": "/casestudies" },
+    { "source": "/journal/:slug",      "destination": "/journal" }
   ]
 }
