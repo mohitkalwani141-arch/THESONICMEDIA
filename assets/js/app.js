@@ -1707,150 +1707,233 @@ const blogArticles = {
 function openBlogArticle(id) {
   const art = blogArticles[id];
   if (!art) return;
-  const win = window.open('', '_blank');
-  const html = `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${art.title} — The Sonic Media Journal</title>
-<meta name="description" content="${art.subtitle}">
-<link rel="icon" type="image/jpeg" href="${art.img}&w=32&h=32&fit=crop">
-<meta property="og:type" content="article">
-<meta property="og:site_name" content="The Sonic Media">
-<meta property="og:title" content="${art.title}">
-<meta property="og:description" content="${art.subtitle}">
-<meta property="og:image" content="${art.img.replace('w=1200','w=1200')}&h=630&fit=crop">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="${art.title} — The Sonic Media Journal">
-<meta property="og:locale" content="en_IN">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:site" content="@thesonicmedia">
-<meta name="twitter:title" content="${art.title}">
-<meta name="twitter:description" content="${art.subtitle}">
-<meta name="twitter:image" content="${art.img.replace('w=1200','w=1200')}&h=630&fit=crop">
-<meta name="twitter:label1" content="Reading time">
-<meta name="twitter:data1" content="${art.readTime}">
-<meta name="twitter:label2" content="Category">
-<meta name="twitter:data2" content="${art.cat}">
-<meta name="robots" content="index, follow">
-<meta name="author" content="The Sonic Media">
-<meta name="article:published_time" content="${art.date}">
-<meta name="article:section" content="${art.cat}">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Article",
-      "@id": "https://thesonicmedia.com/journal#${art.id || id}",
-      "headline": "${art.title.replace(/"/g,'\\"')}",
-      "description": "${art.subtitle.replace(/"/g,'\\"')}",
-      "image": {
-        "@type": "ImageObject",
-        "url": "${art.img}",
-        "width": 1200,
-        "height": 630
-      },
-      "author": {
-        "@type": "Organization",
-        "name": "The Sonic Media",
-        "url": "https://thesonicmedia.com"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "The Sonic Media",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://res.cloudinary.com/dq2nrpky0/image/upload/v1779787887/favicon_oalxfi.png"
-        }
-      },
-      "datePublished": "${art.date}",
-      "dateModified": "${art.date}",
-      "mainEntityOfPage": "https://thesonicmedia.com/journal",
-      "articleSection": "${art.cat}",
-      "keywords": "${art.cat}, digital marketing India, The Sonic Media"
-    },
-    {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {"@type":"ListItem","position":1,"name":"Home","item":"https://thesonicmedia.com/"},
-        {"@type":"ListItem","position":2,"name":"Journal","item":"https://thesonicmedia.com/journal"},
-        {"@type":"ListItem","position":3,"name":"${art.title.replace(/"/g,'\\"')}"}
-      ]
-    }
-  ]
-}
-<\/script>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500&display=swap" rel="stylesheet">
-<style>
+
+  /* ── Inject overlay shell once ── */
+  if (!document.getElementById('jnl-overlay')) {
+    const shell = document.createElement('div');
+    shell.id = 'jnl-overlay';
+    shell.style.cssText = 'display:none;position:absolute;top:0;left:0;width:100%;z-index:99999;background:#080808;';
+    document.documentElement.appendChild(shell);
+  }
+  const overlay = document.getElementById('jnl-overlay');
+
+  /* ── Build inner HTML ── */
+  overlay.innerHTML = `<style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-html{font-size:16px;scroll-behavior:smooth;}
-body{font-family:'DM Sans',sans-serif;background:#080808;color:#F5F0EB;line-height:1.7;min-height:100vh;}
-.cs-nav{position:sticky;top:0;z-index:100;background:rgba(8,8,8,.93);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06);padding:0 48px;height:68px;display:flex;align-items:center;justify-content:space-between;}
-.cs-brand{display:flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:14px;font-weight:800;letter-spacing:.04em;color:#F5F0EB;}
-.cs-brand-mark{width:34px;height:34px;border-radius:8px;background:#FF5C00;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:17px;color:#fff;}
-.cs-close{padding:8px 20px;border-radius:50px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(245,240,235,.6);font-family:'Syne',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;}
-.cs-close:hover{background:rgba(255,92,0,.15);border-color:rgba(255,92,0,.35);color:#FF5C00;}
-.cs-hero{padding:90px 72px 72px;background:#0f0f0f;position:relative;overflow:hidden;}
-.cs-hero::before{content:'';position:absolute;top:0;right:0;width:600px;height:600px;background:radial-gradient(circle,rgba(255,92,0,.07) 0%,transparent 70%);pointer-events:none;}
-.cs-eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#FF5C00;margin-bottom:20px;}
-.cs-eyebrow::before{content:'';width:22px;height:1.5px;background:#FF5C00;}
-.cs-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,6vw,88px);line-height:.92;letter-spacing:.02em;margin-bottom:20px;max-width:900px;}
-.cs-h1 span{color:#FF5C00;}
-.cs-subtitle{font-size:18px;line-height:1.7;color:rgba(245,240,235,.6);max-width:700px;font-weight:300;margin-bottom:20px;}
-.cs-meta{font-family:'Syne',sans-serif;font-size:12px;font-weight:600;letter-spacing:.1em;color:#666;text-transform:uppercase;}
-.cs-body{max-width:860px;margin:0 auto;padding:72px 72px 100px;}
-.cs-img-wrap{border-radius:16px;overflow:hidden;margin-bottom:14px;aspect-ratio:16/9;background:#161616;}
-.cs-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
-.cs-img-cap{font-family:'Syne',sans-serif;font-size:12px;font-weight:600;color:rgba(245,240,235,.4);letter-spacing:.06em;margin-bottom:44px;padding-left:4px;}
-.cs-article{font-size:17px;line-height:1.9;color:rgba(245,240,235,.75);font-weight:300;padding:44px;border-radius:16px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.05);}
-.cs-article::first-letter{font-family:'Bebas Neue',sans-serif;font-size:72px;line-height:.8;float:left;margin-right:12px;margin-top:6px;color:#FF5C00;}
-.cs-article p{margin-bottom:20px;}
-.cs-cta{margin-top:60px;padding:40px;border-radius:16px;background:rgba(255,92,0,.08);border:1px solid rgba(255,92,0,.2);text-align:center;}
-.cs-cta-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin-bottom:10px;}
-.cs-cta-p{font-size:14px;color:rgba(245,240,235,.6);margin-bottom:24px;}
-.cs-cta-btn{display:inline-flex;align-items:center;gap:8px;background:#FF5C00;color:#fff;padding:14px 32px;border-radius:50px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;letter-spacing:.04em;text-decoration:none;transition:all .3s;box-shadow:0 0 30px rgba(255,92,0,.35);}
-.cs-cta-btn:hover{box-shadow:0 0 50px rgba(255,92,0,.6);transform:translateY(-2px);}
-.cs-footer{border-top:1px solid rgba(255,255,255,.05);padding:32px 72px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
-.cs-footer-copy{font-size:13px;color:#666;}
-.cs-footer-copy span{color:#FF5C00;}
-.cs-back{display:inline-flex;align-items:center;gap:8px;font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:#FF5C00;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:gap .25s;}
-.cs-back:hover{gap:14px;}
-@media(max-width:768px){.cs-nav,.cs-footer{padding-left:20px;padding-right:20px;}.cs-hero{padding:80px 20px 48px;}.cs-body{padding:32px 20px 80px;}.cs-article{padding:24px;font-size:15px;}.cs-cta{padding:28px 20px;}}
+.jnl-nav{position:sticky;top:0;z-index:100;background:rgba(8,8,8,.93);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06);padding:0 48px;height:68px;display:flex;align-items:center;justify-content:space-between;}
+.jnl-brand{display:flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:14px;font-weight:800;letter-spacing:.04em;color:#F5F0EB;}
+.jnl-close{padding:8px 20px;border-radius:50px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(245,240,235,.6);font-family:'Syne',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;}
+.jnl-close:hover{background:rgba(255,92,0,.15);border-color:rgba(255,92,0,.35);color:#FF5C00;}
+.jnl-hero{padding:90px 72px 72px;background:#0f0f0f;position:relative;overflow:hidden;}
+.jnl-hero::before{content:'';position:absolute;top:0;right:0;width:600px;height:600px;background:radial-gradient(circle,rgba(255,92,0,.07) 0%,transparent 70%);pointer-events:none;}
+.jnl-eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#FF5C00;margin-bottom:20px;}
+.jnl-eyebrow::before{content:'';width:22px;height:1.5px;background:#FF5C00;}
+.jnl-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,6vw,88px);line-height:.92;letter-spacing:.02em;margin-bottom:20px;max-width:900px;}
+.jnl-h1 span{color:#FF5C00;}
+.jnl-subtitle{font-size:18px;line-height:1.7;color:rgba(245,240,235,.6);max-width:700px;font-weight:300;margin-bottom:20px;}
+.jnl-meta{font-family:'Syne',sans-serif;font-size:12px;font-weight:600;letter-spacing:.1em;color:#666;text-transform:uppercase;}
+.jnl-body{max-width:860px;margin:0 auto;padding:72px 72px 100px;}
+.jnl-img-wrap{border-radius:16px;overflow:hidden;margin-bottom:14px;aspect-ratio:16/9;background:#161616;}
+.jnl-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
+.jnl-img-cap{font-family:'Syne',sans-serif;font-size:12px;font-weight:600;color:rgba(245,240,235,.4);letter-spacing:.06em;margin-bottom:44px;padding-left:4px;}
+.jnl-article{font-size:17px;line-height:1.9;color:rgba(245,240,235,.75);font-weight:300;padding:44px;border-radius:16px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.05);}
+.jnl-article::first-letter{font-family:'Bebas Neue',sans-serif;font-size:72px;line-height:.8;float:left;margin-right:12px;margin-top:6px;color:#FF5C00;}
+.jnl-article p{margin-bottom:20px;}
+.jnl-cta{margin-top:60px;padding:40px;border-radius:16px;background:rgba(255,92,0,.08);border:1px solid rgba(255,92,0,.2);text-align:center;}
+.jnl-cta-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin-bottom:10px;}
+.jnl-cta-p{font-size:14px;color:rgba(245,240,235,.6);margin-bottom:24px;}
+.jnl-cta-btn{display:inline-flex;align-items:center;gap:8px;background:#FF5C00;color:#fff;padding:14px 32px;border-radius:50px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;letter-spacing:.04em;text-decoration:none;transition:all .3s;box-shadow:0 0 30px rgba(255,92,0,.35);}
+.jnl-cta-btn:hover{box-shadow:0 0 50px rgba(255,92,0,.6);transform:translateY(-2px);}
+.jnl-footer{border-top:1px solid rgba(255,255,255,.05);padding:32px 72px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.jnl-footer-copy{font-size:13px;color:#666;}
+.jnl-footer-copy span{color:#FF5C00;}
+.jnl-back{display:inline-flex;align-items:center;gap:8px;font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:#FF5C00;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:gap .25s;background:none;border:none;}
+.jnl-back:hover{gap:14px;}
+@media(max-width:768px){.jnl-nav,.jnl-footer{padding-left:20px;padding-right:20px;}.jnl-hero{padding:80px 20px 48px;}.jnl-body{padding:32px 20px 80px;}.jnl-article{padding:24px;font-size:15px;}.jnl-cta{padding:28px 20px;}}
 </style>
-</head>
-<body>
-<nav class="cs-nav">
-  <div class="cs-brand"><img src="https://res.cloudinary.com/dq2nrpky0/image/upload/v1779787887/favicon_oalxfi.png" alt="The Sonic Media Logo" style="width:34px;height:34px;object-fit:contain;flex-shrink:0;" />THE SONIC MEDIA</div>
-  <button class="cs-close" onclick="window.close()">✕ Close</button>
+<nav class="jnl-nav">
+  <div class="jnl-brand"><img src="https://res.cloudinary.com/dq2nrpky0/image/upload/v1779787887/favicon_oalxfi.png" alt="The Sonic Media Logo" style="width:34px;height:34px;object-fit:contain;flex-shrink:0;" />THE SONIC MEDIA</div>
+  <button class="jnl-close" id="jnl-close-btn">✕ Close</button>
 </nav>
-<div class="cs-hero">
-  <div class="cs-eyebrow">Journal · ${art.cat}</div>
-  <h1 class="cs-h1">${art.title}</h1>
-  <p class="cs-subtitle">${art.subtitle}</p>
-  <div class="cs-meta">${art.date} &nbsp;·&nbsp; The Sonic Media &nbsp;·&nbsp; ${art.readTime}</div>
+<div class="jnl-hero">
+  <div class="jnl-eyebrow">Journal · ${art.cat}</div>
+  <h1 class="jnl-h1">${art.title}</h1>
+  <p class="jnl-subtitle">${art.subtitle}</p>
+  <div class="jnl-meta">${art.date} &nbsp;·&nbsp; The Sonic Media &nbsp;·&nbsp; ${art.readTime}</div>
 </div>
-<div class="cs-body">
-  <div class="cs-img-wrap"><img src="${art.img}" alt="${art.title}" loading="lazy"></div>
-  <div class="cs-img-cap">${art.imgCap}</div>
-  <div class="cs-article">${art.body}</div>
-  <div class="cs-cta">
-    <div class="cs-cta-title">Ready to Grow Your Brand in India?</div>
-    <p class="cs-cta-p">The Sonic Media has helped 500+ brands across India achieve outsized growth through data-driven strategy, cinematic content, and technology that converts.</p>
-    <a href="#" onclick="window.close();if(window.opener&&window.opener.navigate)window.opener.navigate('contact');" class="cs-cta-btn">Work With The Sonic Media →</a>
+<div class="jnl-body">
+  <div class="jnl-img-wrap"><img src="${art.img}" alt="${art.title}" loading="lazy"></div>
+  <div class="jnl-img-cap">${art.imgCap}</div>
+  <div class="jnl-article">${art.body}</div>
+  <div class="jnl-cta">
+    <div class="jnl-cta-title">Ready to Grow Your Brand in India?</div>
+    <p class="jnl-cta-p">The Sonic Media has helped 500+ brands across India achieve outsized growth through data-driven strategy, cinematic content, and technology that converts.</p>
+    <a href="#" id="jnl-cta-contact-btn" class="jnl-cta-btn">Work With The Sonic Media →</a>
   </div>
 </div>
-<div class="cs-footer">
-  <div class="cs-footer-copy">© 2026 <span>The Sonic Media</span>. All rights reserved.</div>
-  <span class="cs-back" onclick="window.close()">← Back to Website</span>
-</div>
-</body>
-</html>`;
-  win.document.write(html);
-  win.document.close();
+<div class="jnl-footer">
+  <div class="jnl-footer-copy">© 2026 <span>The Sonic Media</span>. All rights reserved.</div>
+  <button class="jnl-back" id="jnl-back-btn">← Back to Journal</button>
+</div>`;
+
+  /* ── Update URL, title, canonical, and OG/Twitter meta ── */
+  const articleUrl = '/journal/' + id;
+  history.pushState({ journalArticle: id }, art.title + ' — The Sonic Media Journal', articleUrl);
+  document.title = art.title + ' — The Sonic Media Journal';
+
+  /* Canonical */
+  let canonical = document.querySelector('link[rel="canonical"]');
+  if (!canonical) { canonical = document.createElement('link'); canonical.rel = 'canonical'; document.head.appendChild(canonical); }
+  canonical.href = 'https://thesonicmedia.com/journal/' + id;
+
+  /* OG meta */
+  function setMeta(prop, val, attr) {
+    attr = attr || 'property';
+    let el = document.querySelector('meta[' + attr + '="' + prop + '"]');
+    if (!el) { el = document.createElement('meta'); el.setAttribute(attr, prop); document.head.appendChild(el); }
+    el.setAttribute('content', val);
+  }
+  setMeta('og:type', 'article');
+  setMeta('og:title', art.title);
+  setMeta('og:description', art.subtitle);
+  setMeta('og:url', 'https://thesonicmedia.com/journal/' + id);
+  setMeta('og:image', art.img + '&h=630&fit=crop');
+  setMeta('twitter:card', 'summary_large_image', 'name');
+  setMeta('twitter:title', art.title, 'name');
+  setMeta('twitter:description', art.subtitle, 'name');
+  setMeta('description', art.subtitle, 'name');
+
+  /* JSON-LD for this article */
+  let ld = document.getElementById('jnl-article-ld');
+  if (!ld) { ld = document.createElement('script'); ld.id = 'jnl-article-ld'; ld.type = 'application/ld+json'; document.head.appendChild(ld); }
+  ld.textContent = JSON.stringify({
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": "https://thesonicmedia.com/journal/" + id,
+        "headline": art.title,
+        "description": art.subtitle,
+        "image": { "@type": "ImageObject", "url": art.img, "width": 1200, "height": 630 },
+        "author": { "@type": "Organization", "name": "The Sonic Media", "url": "https://thesonicmedia.com" },
+        "publisher": { "@type": "Organization", "name": "The Sonic Media", "logo": { "@type": "ImageObject", "url": "https://res.cloudinary.com/dq2nrpky0/image/upload/v1779787887/favicon_oalxfi.png" } },
+        "datePublished": art.date,
+        "dateModified": art.date,
+        "mainEntityOfPage": "https://thesonicmedia.com/journal/" + id,
+        "articleSection": art.cat,
+        "keywords": art.cat + ", digital marketing India, The Sonic Media"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://thesonicmedia.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Journal", "item": "https://thesonicmedia.com/journal" },
+          { "@type": "ListItem", "position": 3, "name": art.title, "item": "https://thesonicmedia.com/journal/" + id }
+        ]
+      }
+    ]
+  });
+
+  /* ── Show overlay ── */
+  overlay.style.display = 'block';
+  document.documentElement.scrollTop = 0;
+  document.body.style.visibility = 'hidden';
+  ['cursor','cursor-follower','cursor-trail','mouse-glow'].forEach(function(elId) {
+    var el = document.getElementById(elId);
+    if (el) document.documentElement.appendChild(el);
+  });
+  if (window.lenis) { window.lenis.destroy(); window.lenis = null; }
+
+  /* ── Wire close buttons ── */
+  function closeHandler() { closeJournalArticle(); }
+  document.getElementById('jnl-close-btn').addEventListener('click', closeHandler);
+  document.getElementById('jnl-back-btn').addEventListener('click', closeHandler);
+  document.getElementById('jnl-cta-contact-btn').addEventListener('click', function(e) {
+    e.preventDefault();
+    closeJournalArticle();
+    if (window.navigate) window.navigate('contact');
+  });
+
+  /* ── Keyboard close ── */
+  overlay._keyHandler = function(e) { if (e.key === 'Escape') closeJournalArticle(); };
+  document.addEventListener('keydown', overlay._keyHandler);
 }
+
+function closeJournalArticle() {
+  const overlay = document.getElementById('jnl-overlay');
+  if (!overlay || overlay.style.display === 'none') return;
+  overlay.style.display = 'none';
+  document.body.style.visibility = '';
+  ['cursor','cursor-follower','cursor-trail','mouse-glow'].forEach(function(elId) {
+    var el = document.getElementById(elId);
+    if (el) document.body.appendChild(el);
+  });
+  if (window._initLenis) { window._initLenis(); }
+  if (overlay._keyHandler) { document.removeEventListener('keydown', overlay._keyHandler); overlay._keyHandler = null; }
+
+  /* Restore URL to /journal */
+  history.pushState({ journalArticle: null }, 'Journal — The Sonic Media', '/journal');
+  document.title = 'Journal — The Sonic Media';
+
+  /* Restore canonical */
+  let canonical = document.querySelector('link[rel="canonical"]');
+  if (canonical) canonical.href = 'https://thesonicmedia.com/journal';
+
+  /* Remove article JSON-LD */
+  const ld = document.getElementById('jnl-article-ld');
+  if (ld) ld.remove();
+}
+
+/* ── Handle browser back/forward through journal article URLs ── */
+(function() {
+  var _origPopstate = null;
+  /* Extend any existing popstate listener by wrapping at module scope */
+  window.addEventListener('popstate', function(e) {
+    const overlay = document.getElementById('jnl-overlay');
+    if (!overlay) return;
+    if (e.state && e.state.journalArticle) {
+      openBlogArticle(e.state.journalArticle);
+    } else {
+      if (overlay.style.display !== 'none') {
+        overlay.style.display = 'none';
+        document.body.style.visibility = '';
+        ['cursor','cursor-follower','cursor-trail','mouse-glow'].forEach(function(elId) {
+          var el = document.getElementById(elId);
+          if (el) document.body.appendChild(el);
+        });
+        if (window._initLenis) { window._initLenis(); }
+        if (overlay._keyHandler) { document.removeEventListener('keydown', overlay._keyHandler); overlay._keyHandler = null; }
+        document.title = 'Journal — The Sonic Media';
+        const ld = document.getElementById('jnl-article-ld');
+        if (ld) ld.remove();
+      }
+    }
+  });
+})();
+
+/* ── On direct URL load: /journal/<slug> → auto-open article ── */
+(function detectJournalSlugOnLoad() {
+  const path = window.location.pathname;
+  /* Match /journal/<slug> — works whether served at /journal or /journal/:slug */
+  const match = path.match(/\/journal\/([^/]+)\/?$/);
+  if (!match) return;
+  const slug = match[1];
+  function tryOpen() {
+    if (typeof blogArticles !== 'undefined' && blogArticles[slug]) {
+      openBlogArticle(slug);
+    } else if (typeof blogArticles !== 'undefined') {
+      /* Slug not found — fall back gracefully to journal listing */
+      history.replaceState({}, 'Journal — The Sonic Media', '/journal');
+    } else {
+      setTimeout(tryOpen, 50);
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', tryOpen);
+  } else {
+    tryOpen();
+  }
+})();
 
 function openLegalPage(type) {
   const data = legalContent[type];
@@ -2364,7 +2447,7 @@ function renderPageData() {
     return `<div class="blog-item" style="display:flex;gap:16px;align-items:flex-start;">` +
       thumbHtml +
       `<div class="blog-info" style="flex:1;min-width:0;"><div class="bt">${p.title}</div><div class="bm"><span>${p.cat}</span>· ${p.time} · ${p.date}</div>` +
-      `<div style="margin-top:8px;"><a href="#" onclick="openBlogArticle('${p.id}');return false;" style="display:inline-flex;align-items:center;gap:6px;font-family:var(--font-heading);font-size:11px;font-weight:700;color:var(--orange);letter-spacing:.06em;text-transform:uppercase;text-decoration:none;transition:gap .25s;" onmouseover="this.style.gap='12px'" onmouseout="this.style.gap='6px'">Read Full Article →</a></div>` +
+      `<div style="margin-top:8px;"><a href="/journal/${p.id}" onclick="openBlogArticle('${p.id}');return false;" style="display:inline-flex;align-items:center;gap:6px;font-family:var(--font-heading);font-size:11px;font-weight:700;color:var(--orange);letter-spacing:.06em;text-transform:uppercase;text-decoration:none;transition:gap .25s;" onmouseover="this.style.gap='12px'" onmouseout="this.style.gap='6px'">Read Full Article →</a></div>` +
       `</div></div>`;
   };
   const homePostsHTML = jnl.posts.slice(0, 5).map(buildBlogItem).join('');
