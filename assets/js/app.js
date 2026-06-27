@@ -4015,7 +4015,7 @@ window.tsmNewsletterSubmit = function(e) {
     var bulletsHtml = (d.bullets || []).map(function(b) {
       return '<div style="display:flex;align-items:flex-start;gap:14px;padding:16px 20px;border-radius:12px;background:rgba(255,92,0,.06);border:1px solid rgba(255,92,0,.15);margin-bottom:12px;">' +
         '<span style="width:8px;height:8px;border-radius:50%;background:#FF5C00;flex-shrink:0;margin-top:6px;box-shadow:0 0 8px rgba(255,92,0,.5);"></span>' +
-        '<span style="font-family:'Syne',sans-serif;font-size:14px;font-weight:600;color:#F5F0EB;line-height:1.6;">' + b + '</span>' +
+        '<span style="font-family:"Syne",sans-serif;font-size:14px;font-weight:600;color:#F5F0EB;line-height:1.6;">' + b + '</span>' +
         '</div>';
     }).join('');
 
@@ -4031,39 +4031,39 @@ window.tsmNewsletterSubmit = function(e) {
     overlay.innerHTML = '<style>' +
       '*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}' +
       '.fv-nav{position:sticky;top:0;z-index:100;background:rgba(8,8,8,.93);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06);padding:0 48px;height:68px;display:flex;align-items:center;justify-content:space-between;}' +
-      '.fv-brand{display:flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:14px;font-weight:800;letter-spacing:.04em;color:#F5F0EB;}' +
-      '.fv-close{padding:8px 20px;border-radius:50px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(245,240,235,.6);font-family:'Syne',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;}' +
+      '.fv-brand{display:flex;align-items:center;gap:10px;font-family:"Syne",sans-serif;font-size:14px;font-weight:800;letter-spacing:.04em;color:#F5F0EB;}' +
+      '.fv-close{padding:8px 20px;border-radius:50px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:rgba(245,240,235,.6);font-family:"Syne",sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;}' +
       '.fv-close:hover{background:rgba(255,92,0,.15);border-color:rgba(255,92,0,.35);color:#FF5C00;}' +
       '.fv-hero{padding:90px 72px 72px;background:#0f0f0f;position:relative;overflow:hidden;}' +
-      '.fv-hero::before{content:'';position:absolute;top:0;right:0;width:600px;height:600px;background:radial-gradient(circle,rgba(255,92,0,.07) 0%,transparent 70%);pointer-events:none;}' +
-      '.fv-eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#FF5C00;margin-bottom:20px;}' +
-      '.fv-eyebrow::before{content:'';width:22px;height:1.5px;background:#FF5C00;}' +
-      '.fv-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,7vw,100px);line-height:.92;letter-spacing:.02em;margin-bottom:16px;}' +
+      '.fv-hero::before{content:"";position:absolute;top:0;right:0;width:600px;height:600px;background:radial-gradient(circle,rgba(255,92,0,.07) 0%,transparent 70%);pointer-events:none;}' +
+      '.fv-eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:"Syne",sans-serif;font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#FF5C00;margin-bottom:20px;}' +
+      '.fv-eyebrow::before{content:"";width:22px;height:1.5px;background:#FF5C00;}' +
+      '.fv-h1{font-family:"Bebas Neue",sans-serif;font-size:clamp(48px,7vw,100px);line-height:.92;letter-spacing:.02em;margin-bottom:16px;}' +
       '.fv-h1 span{color:#FF5C00;}' +
-      '.fv-meta{font-family:'Syne',sans-serif;font-size:12px;font-weight:600;letter-spacing:.1em;color:#666;text-transform:uppercase;}' +
+      '.fv-meta{font-family:"Syne",sans-serif;font-size:12px;font-weight:600;letter-spacing:.1em;color:#666;text-transform:uppercase;}' +
       '.fv-body{max-width:960px;margin:0 auto;padding:72px 72px 100px;}' +
       '.fv-img-wrap{border-radius:16px;overflow:hidden;margin-bottom:14px;aspect-ratio:16/9;background:#161616;}' +
       '.fv-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;}' +
-      '.fv-img-cap{font-family:'Syne',sans-serif;font-size:12px;font-weight:600;color:rgba(245,240,235,.4);letter-spacing:.06em;margin-bottom:40px;padding-left:4px;}' +
-      '.fv-subtitle{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#FF5C00;margin-bottom:24px;letter-spacing:.02em;}' +
+      '.fv-img-cap{font-family:"Syne",sans-serif;font-size:12px;font-weight:600;color:rgba(245,240,235,.4);letter-spacing:.06em;margin-bottom:40px;padding-left:4px;}' +
+      '.fv-subtitle{font-family:"Syne",sans-serif;font-size:22px;font-weight:800;color:#FF5C00;margin-bottom:24px;letter-spacing:.02em;}' +
       '.fv-article{font-size:17px;line-height:1.9;color:rgba(245,240,235,.72);font-weight:300;padding:44px;border-radius:16px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.05);margin-bottom:40px;}' +
-      '.fv-article::first-letter{font-family:'Bebas Neue',sans-serif;font-size:72px;line-height:.8;float:left;margin-right:12px;margin-top:6px;color:#FF5C00;}' +
-      '.fv-bullets-title{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#FF5C00;margin-bottom:20px;display:flex;align-items:center;gap:12px;}' +
-      '.fv-bullets-title::before{content:'';width:28px;height:1.5px;background:#FF5C00;}' +
+      '.fv-article::first-letter{font-family:"Bebas Neue",sans-serif;font-size:72px;line-height:.8;float:left;margin-right:12px;margin-top:6px;color:#FF5C00;}' +
+      '.fv-bullets-title{font-family:"Syne",sans-serif;font-size:11px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#FF5C00;margin-bottom:20px;display:flex;align-items:center;gap:12px;}' +
+      '.fv-bullets-title::before{content:"";width:28px;height:1.5px;background:#FF5C00;}' +
       '.fv-footer{border-top:1px solid rgba(255,255,255,.05);padding:32px 72px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}' +
       '.fv-footer-copy{font-size:13px;color:#666;}' +
       '.fv-footer-copy span{color:#FF5C00;}' +
-      '.fv-back{display:inline-flex;align-items:center;gap:8px;font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:#FF5C00;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:gap .25s;background:none;border:none;}' +
+      '.fv-back{display:inline-flex;align-items:center;gap:8px;font-family:"Syne",sans-serif;font-size:12px;font-weight:700;color:#FF5C00;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:gap .25s;background:none;border:none;}' +
       '.fv-back:hover{gap:14px;}' +
       '.fv-cta-band{background:#0f0f0f;border-top:1px solid rgba(255,92,0,.15);border-bottom:1px solid rgba(255,92,0,.15);padding:64px 72px;text-align:center;position:relative;overflow:hidden;}' +
-      '.fv-cta-band::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:300px;background:radial-gradient(ellipse,rgba(255,92,0,.09) 0%,transparent 70%);pointer-events:none;}' +
-      '.fv-cta-eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#FF5C00;margin-bottom:18px;}' +
-      '.fv-cta-eyebrow::before{content:'';width:22px;height:1.5px;background:#FF5C00;}' +
-      '.fv-cta-h{font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,5vw,68px);line-height:.95;letter-spacing:.02em;color:#F5F0EB;margin-bottom:16px;}' +
+      '.fv-cta-band::before{content:"";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:300px;background:radial-gradient(ellipse,rgba(255,92,0,.09) 0%,transparent 70%);pointer-events:none;}' +
+      '.fv-cta-eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:"Syne",sans-serif;font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#FF5C00;margin-bottom:18px;}' +
+      '.fv-cta-eyebrow::before{content:"";width:22px;height:1.5px;background:#FF5C00;}' +
+      '.fv-cta-h{font-family:"Bebas Neue",sans-serif;font-size:clamp(36px,5vw,68px);line-height:.95;letter-spacing:.02em;color:#F5F0EB;margin-bottom:16px;}' +
       '.fv-cta-h span{color:#FF5C00;}' +
       '.fv-cta-p{font-size:15px;line-height:1.75;color:rgba(245,240,235,.55);font-weight:300;max-width:480px;margin:0 auto 36px;}' +
-      '.fv-cta-btn{display:inline-flex;align-items:center;gap:10px;background:#FF5C00;color:#fff;padding:16px 38px;border-radius:50px;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;letter-spacing:.04em;text-decoration:none;position:relative;overflow:hidden;box-shadow:0 0 30px rgba(255,92,0,.4);transition:all .3s;}' +
-      '.fv-cta-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);transform:translateX(-100%);transition:transform .5s;}' +
+      '.fv-cta-btn{display:inline-flex;align-items:center;gap:10px;background:#FF5C00;color:#fff;padding:16px 38px;border-radius:50px;font-family:"Syne",sans-serif;font-size:14px;font-weight:700;letter-spacing:.04em;text-decoration:none;position:relative;overflow:hidden;box-shadow:0 0 30px rgba(255,92,0,.4);transition:all .3s;}' +
+      '.fv-cta-btn::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);transform:translateX(-100%);transition:transform .5s;}' +
       '.fv-cta-btn:hover::before{transform:translateX(100%);}' +
       '.fv-cta-btn:hover{transform:translateY(-3px);box-shadow:0 0 50px rgba(255,92,0,.65);}' +
       '@media(max-width:768px){.fv-nav,.fv-footer{padding-left:20px;padding-right:20px;}.fv-hero{padding:60px 20px 48px;}.fv-body{padding:40px 20px 80px;}.fv-article{padding:28px;}.fv-cta-band{padding:48px 24px;}}' +
@@ -4087,7 +4087,7 @@ window.tsmNewsletterSubmit = function(e) {
       '<div class="fv-cta-band">' +
         '<div class="fv-cta-eyebrow">Ready to Build the Future?</div>' +
         '<div class="fv-cta-h">Work With <span>The Sonic Media</span></div>' +
-        '<p class="fv-cta-p">Let's build your brand's next growth chapter together — strategy, content, performance, and technology under one roof.</p>' +
+        '<p class="fv-cta-p">Let\'s build your brand\'s next growth chapter together — strategy, content, performance, and technology under one roof.</p>' +
         '<a class="fv-cta-btn" href="#" id="fv-cta-contact-btn">Start Your Project →</a>' +
       '</div>' +
       '<div class="fv-footer">' +
