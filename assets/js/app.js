@@ -4007,7 +4007,7 @@ window.tsmNewsletterSubmit = function(e) {
     if (!document.getElementById('fv-overlay')) {
       var shell = document.createElement('div');
       shell.id = 'fv-overlay';
-      shell.style.cssText = 'display:none;position:absolute;top:0;left:0;width:100%;z-index:99999;background:#080808;overflow-y:auto;';
+      shell.style.cssText = 'display:none;position:fixed;inset:0;z-index:99999;background:#080808;overflow-y:auto;';
       document.documentElement.appendChild(shell);
     }
     var overlay = document.getElementById('fv-overlay');
