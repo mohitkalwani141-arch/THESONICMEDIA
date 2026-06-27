@@ -4007,7 +4007,7 @@ window.tsmNewsletterSubmit = function(e) {
     if (!document.getElementById('fv-overlay')) {
       var shell = document.createElement('div');
       shell.id = 'fv-overlay';
-      shell.style.cssText = 'display:none;position:absolute;top:0;left:0;width:100%;z-index:99999;background:#080808;';
+      shell.style.cssText = 'display:none;position:absolute;top:0;left:0;width:100%;z-index:99999;background:#080808;overflow-y:auto;';
       document.documentElement.appendChild(shell);
     }
     var overlay = document.getElementById('fv-overlay');
@@ -4066,7 +4066,7 @@ window.tsmNewsletterSubmit = function(e) {
       '.fv-cta-btn::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);transform:translateX(-100%);transition:transform .5s;}' +
       '.fv-cta-btn:hover::before{transform:translateX(100%);}' +
       '.fv-cta-btn:hover{transform:translateY(-3px);box-shadow:0 0 50px rgba(255,92,0,.65);}' +
-      '@media(max-width:768px){.fv-nav,.fv-footer{padding-left:20px;padding-right:20px;}.fv-hero{padding:60px 20px 48px;}.fv-body{padding:40px 20px 80px;}.fv-article{padding:28px;}.fv-cta-band{padding:48px 24px;}}' +
+      '@media(max-width:768px){.fv-nav,.fv-footer{padding-left:20px;padding-right:20px;}.fv-hero{padding:60px 20px 48px;}.fv-body{padding:40px 20px 0;}.fv-article{padding:28px;}.fv-cta-band{padding:48px 24px;}}' +
       '</style>' +
       '<nav class="fv-nav">' +
         '<div class="fv-brand"><img src="https://res.cloudinary.com/dq2nrpky0/image/upload/v1779787887/favicon_oalxfi.png" alt="The Sonic Media Logo" style="width:34px;height:34px;object-fit:contain;flex-shrink:0;" />THE SONIC MEDIA</div>' +
