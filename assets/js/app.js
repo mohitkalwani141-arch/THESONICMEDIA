@@ -646,7 +646,7 @@ const legalContent = {
 
 /* ─ Work Detail Pages ─ */
 const workDetails = {
-  luxefashion: {
+  ledgerlink: {
     title: 'LedgerLink Consultation Pvt Ltd',
     subtitle: 'Tax & Financial Advisory Website',
     category: 'Web Design & Development',
@@ -2196,7 +2196,7 @@ const PAGE_DATA = {
     /* ── EDIT WORKS HERE — changes reflect on BOTH homepage & Portfolio page ── */
     works: [
       {
-        id: 'luxefashion',
+        id: 'ledgerlink',
         num: '01',
         cat: 'Web Design & Development',
         name: 'LedgerLink Consultation — Tax & Financial Advisory Website',
