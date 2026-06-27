@@ -1329,7 +1329,7 @@ function openCaseStudy(id) {
 .cs-hero::before{content:'';position:absolute;top:0;right:0;width:600px;height:600px;background:radial-gradient(circle,rgba(255,92,0,.07) 0%,transparent 70%);pointer-events:none;}
 .cs-eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#FF5C00;margin-bottom:20px;}
 .cs-eyebrow::before{content:'';width:22px;height:1.5px;background:#FF5C00;}
-.cs-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,7vw,100px);line-height:.92;letter-spacing:.02em;margin-bottom:16px;}
+.cs-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,7vw,100px);line-height:.92;letter-spacing:.02em;margin-bottom:16px;color:#F5F0EB;}
 .cs-h1 span{color:#FF5C00;}
 .cs-meta{font-family:'Syne',sans-serif;font-size:12px;font-weight:600;letter-spacing:.1em;color:#666;text-transform:uppercase;}
 .cs-body{max-width:960px;margin:0 auto;padding:72px 72px 100px;}
@@ -1728,7 +1728,7 @@ function openBlogArticle(id) {
 .jnl-hero::before{content:'';position:absolute;top:0;right:0;width:600px;height:600px;background:radial-gradient(circle,rgba(255,92,0,.07) 0%,transparent 70%);pointer-events:none;}
 .jnl-eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#FF5C00;margin-bottom:20px;}
 .jnl-eyebrow::before{content:'';width:22px;height:1.5px;background:#FF5C00;}
-.jnl-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,6vw,88px);line-height:.92;letter-spacing:.02em;margin-bottom:20px;max-width:900px;}
+.jnl-h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,6vw,88px);line-height:.92;letter-spacing:.02em;margin-bottom:20px;max-width:900px;color:#F5F0EB;}
 .jnl-h1 span{color:#FF5C00;}
 .jnl-subtitle{font-size:18px;line-height:1.7;color:rgba(245,240,235,.6);max-width:700px;font-weight:300;margin-bottom:20px;}
 .jnl-meta{font-family:'Syne',sans-serif;font-size:12px;font-weight:600;letter-spacing:.1em;color:#666;text-transform:uppercase;}
@@ -1740,7 +1740,7 @@ function openBlogArticle(id) {
 
 .jnl-article p{margin-bottom:20px;}
 .jnl-cta{margin-top:60px;padding:40px;border-radius:16px;background:rgba(255,92,0,.08);border:1px solid rgba(255,92,0,.2);text-align:center;}
-.jnl-cta-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin-bottom:10px;}
+.jnl-cta-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin-bottom:10px;color:#F5F0EB;}
 .jnl-cta-p{font-size:14px;color:rgba(245,240,235,.6);margin-bottom:24px;}
 .jnl-cta-btn{display:inline-flex;align-items:center;gap:8px;background:#FF5C00;color:#fff;padding:14px 32px;border-radius:50px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;letter-spacing:.04em;text-decoration:none;transition:all .3s;box-shadow:0 0 30px rgba(255,92,0,.35);}
 .jnl-cta-btn:hover{box-shadow:0 0 50px rgba(255,92,0,.6);transform:translateY(-2px);}
@@ -4038,7 +4038,7 @@ window.tsmNewsletterSubmit = function(e) {
       '.fv-hero::before{content:"";position:absolute;top:0;right:0;width:600px;height:600px;background:radial-gradient(circle,rgba(255,92,0,.07) 0%,transparent 70%);pointer-events:none;}' +
       '.fv-eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:"Syne",sans-serif;font-size:10px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#FF5C00;margin-bottom:20px;}' +
       '.fv-eyebrow::before{content:"";width:22px;height:1.5px;background:#FF5C00;}' +
-      '.fv-h1{font-family:"Bebas Neue",sans-serif;font-size:clamp(48px,7vw,100px);line-height:.92;letter-spacing:.02em;margin-bottom:16px;}' +
+      '.fv-h1{font-family:"Bebas Neue",sans-serif;font-size:clamp(48px,7vw,100px);line-height:.92;letter-spacing:.02em;margin-bottom:16px;color:#F5F0EB;}' +
       '.fv-h1 span{color:#FF5C00;}' +
       '.fv-meta{font-family:"Syne",sans-serif;font-size:12px;font-weight:600;letter-spacing:.1em;color:#666;text-transform:uppercase;}' +
       '.fv-body{max-width:960px;margin:0 auto;padding:72px 72px 100px;}' +
