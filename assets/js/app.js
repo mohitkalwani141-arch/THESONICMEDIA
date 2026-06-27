@@ -839,6 +839,15 @@ function openWorkDetail(id) {
   }
   const wdOverlay = document.getElementById('wd-overlay');
 
+  /* ── Remember scroll position if opened from home page ── */
+  if (typeof currentPage !== 'undefined' && currentPage === 'home') {
+    wdOverlay._returnScrollY = window.scrollY;
+    wdOverlay._returnAnchor  = 'home-portfolio-eyebrow';
+  } else {
+    wdOverlay._returnScrollY = null;
+    wdOverlay._returnAnchor  = null;
+  }
+
   /* ── Tags pill row ── */
   const tagsHtml = w.tags.map(t =>
     `<span style="display:inline-flex;align-items:center;padding:6px 16px;border:1px solid rgba(255,92,0,.35);border-radius:50px;font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#FF5C00;background:rgba(255,92,0,.06);">${t}</span>`
@@ -1171,6 +1180,16 @@ function closeWorkDetail() {
   });
   if (window._initLenis) { window._initLenis(); }
   if (wdOv._keyHandler) { document.removeEventListener('keydown', wdOv._keyHandler); wdOv._keyHandler = null; }
+  /* ── Restore home page scroll position if opened from home ── */
+  var _wdReturnY      = wdOv._returnScrollY;
+  var _wdReturnAnchor = wdOv._returnAnchor;
+  if (_wdReturnY !== null && _wdReturnAnchor) {
+    setTimeout(function() {
+      var el = document.getElementById(_wdReturnAnchor);
+      if (el) { el.scrollIntoView({ behavior: 'instant', block: 'start' }); }
+      else    { window.scrollTo(0, _wdReturnY); }
+    }, 0);
+  }
   history.pushState({ portfolioWork: null }, 'Portfolio — The Sonic Media', '/portfolio');
   document.title = 'Portfolio — The Sonic Media';
   var wdCan = document.querySelector('link[rel="canonical"]');
@@ -1486,6 +1505,15 @@ function openCaseStudy(id) {
   <button class="cs-back" id="cs-back-btn">← Back to Case Studies</button>
 </div>`;
 
+  /* ── Remember scroll position if opened from home page ── */
+  if (typeof currentPage !== 'undefined' && currentPage === 'home') {
+    overlay._returnScrollY = window.scrollY;
+    overlay._returnAnchor  = 'home-casestudies-tag';
+  } else {
+    overlay._returnScrollY = null;
+    overlay._returnAnchor  = null;
+  }
+
   /* ── Update URL & meta ── */
   const cleanSlug = id;
   const newUrl = '/case-studies/' + cleanSlug;
@@ -1531,6 +1559,16 @@ function closeCaseStudy() {
   });
   if (window._initLenis) { window._initLenis(); }
   if (overlay._keyHandler) { document.removeEventListener('keydown', overlay._keyHandler); overlay._keyHandler = null; }
+  /* ── Restore home page scroll position if opened from home ── */
+  var _csReturnY      = overlay._returnScrollY;
+  var _csReturnAnchor = overlay._returnAnchor;
+  if (_csReturnY !== null && _csReturnAnchor) {
+    setTimeout(function() {
+      var el = document.getElementById(_csReturnAnchor);
+      if (el) { el.scrollIntoView({ behavior: 'instant', block: 'start' }); }
+      else    { window.scrollTo(0, _csReturnY); }
+    }, 0);
+  }
 
   /* Restore URL to /casestudies (or /case-studies if that was the entry point) */
   const backUrl = '/case-studies';
@@ -1882,6 +1920,16 @@ function openBlogArticle(id) {
 
   /* ── Update URL, title, canonical, and OG/Twitter meta ── */
   const articleUrl = '/journal/' + id;
+  /* ── Remember scroll position if opened from home page ── */
+  var _jnlOvEl = document.getElementById('jnl-overlay');
+  if (_jnlOvEl && typeof currentPage !== 'undefined' && currentPage === 'home') {
+    _jnlOvEl._returnScrollY = window.scrollY;
+    _jnlOvEl._returnAnchor  = 'home-journal-tag';
+  } else if (_jnlOvEl) {
+    _jnlOvEl._returnScrollY = null;
+    _jnlOvEl._returnAnchor  = null;
+  }
+
   history.pushState({ journalArticle: id }, art.title + ' — The Sonic Media Journal', articleUrl);
   document.title = art.title + ' — The Sonic Media Journal';
 
@@ -1974,6 +2022,16 @@ function closeJournalArticle() {
   });
   if (window._initLenis) { window._initLenis(); }
   if (overlay._keyHandler) { document.removeEventListener('keydown', overlay._keyHandler); overlay._keyHandler = null; }
+  /* ── Restore home page scroll position if opened from home ── */
+  var _jnlReturnY      = overlay._returnScrollY;
+  var _jnlReturnAnchor = overlay._returnAnchor;
+  if (_jnlReturnY !== null && _jnlReturnAnchor) {
+    setTimeout(function() {
+      var el = document.getElementById(_jnlReturnAnchor);
+      if (el) { el.scrollIntoView({ behavior: 'instant', block: 'start' }); }
+      else    { window.scrollTo(0, _jnlReturnY); }
+    }, 0);
+  }
 
   /* Restore URL to /journal */
   history.pushState({ journalArticle: null }, 'Journal — The Sonic Media', '/journal');
@@ -4201,6 +4259,16 @@ window.tsmNewsletterSubmit = function(e) {
 
     /* ── Update URL, title, canonical, OG/Twitter meta, JSON-LD ── */
     var articleUrl = '/future-vision/' + slug;
+    /* ── Remember scroll position if opened from home page ── */
+    var _fvOvEl = document.getElementById('fv-overlay');
+    if (_fvOvEl && typeof currentPage !== 'undefined' && currentPage === 'home') {
+      _fvOvEl._returnScrollY = window.scrollY;
+      _fvOvEl._returnAnchor  = 'futureSplitSection';
+    } else if (_fvOvEl) {
+      _fvOvEl._returnScrollY = null;
+      _fvOvEl._returnAnchor  = null;
+    }
+
     history.pushState({ fvArticle: slug }, p.title + ' — Future Vision — The Sonic Media', articleUrl);
     document.title = p.title + ' — Future Vision — The Sonic Media';
 
@@ -4286,6 +4354,16 @@ window.tsmNewsletterSubmit = function(e) {
     });
     if (window._initLenis) { window._initLenis(); }
     if (overlay._keyHandler) { document.removeEventListener('keydown', overlay._keyHandler); overlay._keyHandler = null; }
+    /* ── Restore home page scroll position if opened from home ── */
+    var _fvReturnY      = overlay._returnScrollY;
+    var _fvReturnAnchor = overlay._returnAnchor;
+    if (_fvReturnY !== null && _fvReturnAnchor) {
+      setTimeout(function() {
+        var el = document.getElementById(_fvReturnAnchor);
+        if (el) { el.scrollIntoView({ behavior: 'instant', block: 'start' }); }
+        else    { window.scrollTo(0, _fvReturnY); }
+      }, 0);
+    }
     history.pushState({ fvArticle: null }, 'Future Vision — The Sonic Media', '/future');
     document.title = 'Future Vision — The Sonic Media';
     var canonical = document.querySelector('link[rel="canonical"]');
