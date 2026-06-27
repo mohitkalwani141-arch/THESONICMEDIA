@@ -22,6 +22,8 @@
     { "source": "/services/ai.html",       "destination": "/services/ai",       "permanent": true }
   ],
   "rewrites": [
+    { "source": "/portfolio/:slug", "destination": "/studio" },
+    { "source": "/portfolio",       "destination": "/studio" },
     { "source": "/case-studies/:slug", "destination": "/casestudies" },
     { "source": "/case-studies",       "destination": "/casestudies" },
     { "source": "/journal/:slug",       "destination": "/journal" },

@@ -829,7 +829,15 @@ const workDetails = {
 function openWorkDetail(id) {
   const w = workDetails[id];
   if (!w) return;
-  const win = window.open('', '_blank');
+
+  /* ── Inject overlay shell once ── */
+  if (!document.getElementById('wd-overlay')) {
+    const shell = document.createElement('div');
+    shell.id = 'wd-overlay';
+    shell.style.cssText = 'display:none;position:absolute;top:0;left:0;width:100%;z-index:99999;background:#080808;';
+    document.documentElement.appendChild(shell);
+  }
+  const wdOverlay = document.getElementById('wd-overlay');
 
   /* ── Tags pill row ── */
   const tagsHtml = w.tags.map(t =>
@@ -920,7 +928,7 @@ function openWorkDetail(id) {
   "@graph": [
     {
       "@type": "CreativeWork",
-      "@id": "https://thesonicmedia.com/studio#${id}",
+      "@id": "https://thesonicmedia.com/portfolio/${id}",
       "name": "${w.title.replace(/"/g,'\\"')}",
       "description": "${(w.about || w.subtitle).replace(/"/g,'\\"')}",
       "image": "${w.images[0].url}",
@@ -937,7 +945,7 @@ function openWorkDetail(id) {
       "@type": "BreadcrumbList",
       "itemListElement": [
         {"@type":"ListItem","position":1,"name":"Home","item":"https://thesonicmedia.com/"},
-        {"@type":"ListItem","position":2,"name":"Portfolio","item":"https://thesonicmedia.com/studio"},
+        {"@type":"ListItem","position":2,"name":"Portfolio","item":"https://thesonicmedia.com/portfolio"},
         {"@type":"ListItem","position":3,"name":"${w.title.replace(/"/g,'\\"')}"}
       ]
     }
@@ -1022,7 +1030,7 @@ body{font-family:'DM Sans',sans-serif;background:#080808;color:#F5F0EB;line-heig
     <img src="https://res.cloudinary.com/dq2nrpky0/image/upload/v1779787887/favicon_oalxfi.png" alt="The Sonic Media" style="width:34px;height:34px;object-fit:contain;flex-shrink:0;" />
     THE SONIC MEDIA
   </div>
-  <button class="wd-close" onclick="window.close()">✕ Close</button>
+  <button class="wd-close" id="wd-close-btn">✕ Close</button>
 </nav>
 
 <!-- HERO -->
@@ -1089,7 +1097,7 @@ body{font-family:'DM Sans',sans-serif;background:#080808;color:#F5F0EB;line-heig
   <div class="wd-cta-h">Work With <em>The Sonic Media</em></div>
   <p class="wd-cta-p">Let's craft your brand's next digital chapter — strategy, design, development, and growth under one roof.</p>
   <div class="wd-cta-btns">
-    <a href="javascript:void(0)" onclick="window.close()"
+    <a href="javascript:void(0)" id="wd-cta-close-btn" onclick="closeWorkDetail()"
       style="display:inline-flex;align-items:center;gap:10px;padding:15px 36px;border-radius:50px;background:#FF5C00;color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:13px;letter-spacing:.05em;text-transform:uppercase;text-decoration:none;box-shadow:0 0 28px rgba(255,92,0,.4);transition:all .3s;"
       onmouseover="this.style.boxShadow='0 0 48px rgba(255,92,0,.65)';this.style.transform='translateY(-2px)'"
       onmouseout="this.style.boxShadow='0 0 28px rgba(255,92,0,.4)';this.style.transform=''">
@@ -1107,14 +1115,110 @@ body{font-family:'DM Sans',sans-serif;background:#080808;color:#F5F0EB;line-heig
 <!-- FOOTER -->
 <div class="wd-footer">
   <div class="wd-footer-copy">© 2026 <em>The Sonic Media</em>. All rights reserved.</div>
-  <span class="wd-back" onclick="window.close()">← Back to Website</span>
+  <span class="wd-back" id="wd-back-btn">← Back to Portfolio</span>
 </div>
 
 </body>
 </html>`;
-  win.document.write(html);
-  win.document.close();
+
+  /* Strip the <html>/<head>/<body> wrapper since we're injecting into a div, not a new document */
+  const bodyMatch = html.match(/<body[^>]*>([\s\S]*)<\/body>/i);
+  const styleMatch = html.match(/<style[\s\S]*?<\/style>/g) || [];
+  const wdInner = styleMatch.join('') + (bodyMatch ? bodyMatch[1] : html);
+  wdOverlay.innerHTML = wdInner;
+
+  /* ── Update URL, title, canonical ── */
+  const wdSlug = id;
+  const wdNewUrl = '/portfolio/' + wdSlug;
+  history.pushState({ portfolioWork: id }, w.title + ' — Portfolio — The Sonic Media', wdNewUrl);
+  document.title = w.title + ' — Portfolio — The Sonic Media';
+  let wdCanonical = document.querySelector('link[rel="canonical"]');
+  if (!wdCanonical) { wdCanonical = document.createElement('link'); wdCanonical.rel = 'canonical'; document.head.appendChild(wdCanonical); }
+  wdCanonical.href = 'https://thesonicmedia.com/portfolio/' + wdSlug;
+
+  /* ── Show overlay ── */
+  wdOverlay.style.display = 'block';
+  document.documentElement.scrollTop = 0;
+  document.body.style.visibility = 'hidden';
+  ['cursor','cursor-follower','cursor-trail','mouse-glow'].forEach(function(eid) {
+    var el = document.getElementById(eid);
+    if (el) document.documentElement.appendChild(el);
+  });
+  if (window.lenis) { window.lenis.destroy(); window.lenis = null; }
+
+  /* ── Wire close buttons ── */
+  function wdCloseHandler() { closeWorkDetail(); }
+  var wdCloseBtn = document.getElementById('wd-close-btn');
+  var wdBackBtn  = document.getElementById('wd-back-btn');
+  var wdCtaBtn   = document.getElementById('wd-cta-close-btn');
+  if (wdCloseBtn) wdCloseBtn.addEventListener('click', wdCloseHandler);
+  if (wdBackBtn)  wdBackBtn.addEventListener('click', wdCloseHandler);
+  if (wdCtaBtn)   wdCtaBtn.addEventListener('click', wdCloseHandler);
+
+  /* ── Keyboard close ── */
+  wdOverlay._keyHandler = function(e) { if (e.key === 'Escape') closeWorkDetail(); };
+  document.addEventListener('keydown', wdOverlay._keyHandler);
 }
+
+function closeWorkDetail() {
+  var wdOv = document.getElementById('wd-overlay');
+  if (!wdOv || wdOv.style.display === 'none') return;
+  wdOv.style.display = 'none';
+  document.body.style.visibility = '';
+  ['cursor','cursor-follower','cursor-trail','mouse-glow'].forEach(function(eid) {
+    var el = document.getElementById(eid);
+    if (el) document.body.appendChild(el);
+  });
+  if (window._initLenis) { window._initLenis(); }
+  if (wdOv._keyHandler) { document.removeEventListener('keydown', wdOv._keyHandler); wdOv._keyHandler = null; }
+  history.pushState({ portfolioWork: null }, 'Portfolio — The Sonic Media', '/portfolio');
+  document.title = 'Portfolio — The Sonic Media';
+  var wdCan = document.querySelector('link[rel="canonical"]');
+  if (wdCan) wdCan.href = 'https://thesonicmedia.com/portfolio';
+}
+
+/* ── Handle browser back/forward through portfolio URLs ── */
+window.addEventListener('popstate', function(e) {
+  var wdOv = document.getElementById('wd-overlay');
+  if (!wdOv) return;
+  if (e.state && e.state.portfolioWork) {
+    openWorkDetail(e.state.portfolioWork);
+  } else {
+    if (wdOv.style.display !== 'none') {
+      wdOv.style.display = 'none';
+      document.body.style.visibility = '';
+      ['cursor','cursor-follower','cursor-trail','mouse-glow'].forEach(function(eid) {
+        var el = document.getElementById(eid);
+        if (el) document.body.appendChild(el);
+      });
+      if (window._initLenis) { window._initLenis(); }
+      if (wdOv._keyHandler) { document.removeEventListener('keydown', wdOv._keyHandler); wdOv._keyHandler = null; }
+      document.title = 'Portfolio — The Sonic Media';
+    }
+  }
+});
+
+/* ── On direct URL load: /portfolio/<slug> → auto-open project ── */
+(function detectPortfolioSlugOnLoad() {
+  var path = window.location.pathname;
+  var match = path.match(/\/portfolio\/([^/]+)\/?$/);
+  if (!match) return;
+  var slug = match[1];
+  function tryOpenWork() {
+    if (typeof workDetails !== 'undefined' && workDetails[slug]) {
+      openWorkDetail(slug);
+    } else if (typeof workDetails !== 'undefined') {
+      history.replaceState({}, 'Portfolio — The Sonic Media', '/portfolio');
+    } else {
+      setTimeout(tryOpenWork, 50);
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', tryOpenWork);
+  } else {
+    tryOpenWork();
+  }
+})();
 
 /* ─ Case Study Detail Pages ─ */
 const caseStudies = {
