@@ -1337,7 +1337,7 @@ function openCaseStudy(id) {
 .cs-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
 .cs-img-cap{font-family:'Syne',sans-serif;font-size:12px;font-weight:600;color:rgba(245,240,235,.4);letter-spacing:.06em;margin-bottom:40px;padding-left:4px;}
 .cs-article{font-size:17px;line-height:1.9;color:rgba(245,240,235,.72);font-weight:300;padding:44px;border-radius:16px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.05);}
-.cs-article::first-letter{font-family:'Bebas Neue',sans-serif;font-size:72px;line-height:.8;float:left;margin-right:12px;margin-top:6px;color:#FF5C00;}
+
 .cs-article p{margin-bottom:20px;}
 .cs-footer{border-top:1px solid rgba(255,255,255,.05);padding:32px 72px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
 .cs-footer-copy{font-size:13px;color:#666;}
@@ -1737,7 +1737,7 @@ function openBlogArticle(id) {
 .jnl-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
 .jnl-img-cap{font-family:'Syne',sans-serif;font-size:12px;font-weight:600;color:rgba(245,240,235,.4);letter-spacing:.06em;margin-bottom:44px;padding-left:4px;}
 .jnl-article{font-size:17px;line-height:1.9;color:rgba(245,240,235,.75);font-weight:300;padding:44px;border-radius:16px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.05);}
-.jnl-article::first-letter{font-family:'Bebas Neue',sans-serif;font-size:72px;line-height:.8;float:left;margin-right:12px;margin-top:6px;color:#FF5C00;}
+
 .jnl-article p{margin-bottom:20px;}
 .jnl-cta{margin-top:60px;padding:40px;border-radius:16px;background:rgba(255,92,0,.08);border:1px solid rgba(255,92,0,.2);text-align:center;}
 .jnl-cta-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin-bottom:10px;}
@@ -4047,7 +4047,7 @@ window.tsmNewsletterSubmit = function(e) {
       '.fv-img-cap{font-family:"Syne",sans-serif;font-size:12px;font-weight:600;color:rgba(245,240,235,.4);letter-spacing:.06em;margin-bottom:40px;padding-left:4px;}' +
       '.fv-subtitle{font-family:"Syne",sans-serif;font-size:22px;font-weight:800;color:#FF5C00;margin-bottom:24px;letter-spacing:.02em;}' +
       '.fv-article{font-size:17px;line-height:1.9;color:rgba(245,240,235,.72);font-weight:300;padding:44px;border-radius:16px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.05);margin-bottom:40px;}' +
-      '.fv-article::first-letter{font-family:"Bebas Neue",sans-serif;font-size:72px;line-height:.8;float:left;margin-right:12px;margin-top:6px;color:#FF5C00;}' +
+
       '.fv-bullets-title{font-family:"Syne",sans-serif;font-size:11px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:#FF5C00;margin-bottom:20px;display:flex;align-items:center;gap:12px;}' +
       '.fv-bullets-title::before{content:"";width:28px;height:1.5px;background:#FF5C00;}' +
       '.fv-footer{border-top:1px solid rgba(255,255,255,.05);padding:32px 72px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}' +
