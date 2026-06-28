@@ -1241,6 +1241,49 @@ window.addEventListener('popstate', function(e) {
 
 /* ─ Case Study Detail Pages ─ */
 const caseStudies = {
+  'ledgerlink-website-development': {
+    title: 'How The Sonic Media Built a Premium Corporate Website for LedgerLink Consultation Private Limited',
+    subtitle: 'A First Digital Identity for a Financial Consulting Firm — Designed for Trust, Clarity, and Enquiries',
+    category: 'Technology',
+    date: 'Jun 10, 2026',
+    images: [
+      { url: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1200&q=80', caption: 'lcpladvisory.com — the corporate website built for LedgerLink Consultation Private Limited.' },
+      { url: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1200&q=80', caption: 'A premium, minimal visual language designed for a financial consulting audience.' },
+    ],
+    body: `<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">Client Overview</h2>
+<p>LedgerLink Consultation Private Limited, founded by Mohit Chimnani, is a financial consulting firm based in Ahmedabad, Gujarat. The company offers taxation, GST compliance, accounting, business registration, statutory compliance, and business advisory services for startups, SMEs, and growing businesses. Before this project, LedgerLink had no official website — the brand existed entirely through referrals and direct outreach.</p>
+<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">The Challenge</h2>
+<p>In financial consulting, credibility is the product. Prospective clients want to verify a firm before they hand over their books, their compliance filings, or their registration paperwork. Without a website, LedgerLink had no place to send a prospect to confirm what the firm does, who runs it, or how to get in touch outside of WhatsApp and word of mouth. That gap made every new enquiry start from zero trust, regardless of how strong the underlying service actually was.</p>
+<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">Our Strategy</h2>
+<p>We approached this as a trust-first build rather than a purely visual one. Three priorities shaped every decision: make a complex list of financial services easy to scan and understand, build credibility within the first screen a visitor sees, and create one obvious path to an enquiry rather than several competing ones. The content structure was also planned around how AI-driven search and answer engines parse a page — clear entity-based headings, answer-first copy, and a logical page hierarchy — so the site is legible to both people and machines from day one.</p>
+<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">Execution</h2>
+<p><strong style="color:#FF5C00;">Website structure.</strong> The site is built around six core pages — Home, About, Services, Gallery, FAQs, and Contact — with the homepage carrying a Hero Banner, Company Introduction, Services, Why Choose Us, Gallery, Client Stories, a Call-to-Action, Contact Information, and Footer Navigation, in that order, so a first-time visitor moves from "who is this" to "what do they do" to "how do I reach them" without friction.</p>
+<p><strong style="color:#FF5C00;">Mobile-first development.</strong> The site was built mobile-first rather than adapted afterward, since the majority of LedgerLink's prospects research and enquire from a phone. Layout, tap targets, and load order were all designed for that context first, with desktop as the expanded view.</p>
+<p><strong style="color:#FF5C00;">SEO and AI optimisation.</strong> The build uses semantic HTML, a clean heading hierarchy, optimised metadata, and internal linking throughout, with content organised into structured, answer-first blocks rather than long unstructured paragraphs — the format that both traditional search engines and AI answer engines parse most reliably.</p>
+<p>Visually, the site follows a premium, minimal, corporate direction: clean typography, a restrained colour palette, generous spacing, and consistent branding across every page, so the design itself signals the seriousness of the services on offer.</p>
+<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">Results</h2>
+<p>With the launch of <a href="https://lcpladvisory.com" target="_blank" rel="noopener" style="color:#FF5C00;text-decoration:underline;">lcpladvisory.com</a>, LedgerLink Consultation Private Limited has its first professional digital presence — a place to send every new prospect that explains the firm, its founder, and its services clearly, and gives them one direct way to get in touch. The client reviewed the finished site and confirmed it met the brief in both design and execution. As the site accumulates traffic and enquiry data, we'll update this case study with concrete numbers — we'd rather report real figures later than invent them now.</p>
+<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">Proof</h2>
+<p>This case study is supported by live screenshots of the finished website above. Client testimonial and analytics data will be added here once available — we only publish proof we can stand behind.</p>
+<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">FAQ</h2>
+<p><strong style="color:#FF5C00;">What did The Sonic Media build for LedgerLink?</strong><br>A fully custom corporate website with a modern, responsive, SEO-ready structure — lcpladvisory.com.</p>
+<p><strong style="color:#FF5C00;">Why did LedgerLink need a website?</strong><br>To build trust with prospects, explain its services clearly, and create a direct channel for enquiries beyond referrals and WhatsApp.</p>
+<p><strong style="color:#FF5C00;">Is the site optimised for search and AI discovery?</strong><br>Yes — semantic HTML, a proper heading hierarchy, metadata, and internal linking are built in throughout.</p>
+<p><strong style="color:#FF5C00;">Is the website mobile responsive?</strong><br>Yes, it was built mobile-first to match how most prospects actually browse.</p>
+<p><strong style="color:#FF5C00;">What services does LedgerLink offer?</strong><br>Taxation, GST compliance, accounting, business registration, statutory compliance, and business advisory services.</p>
+<h2 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#F5F0EB;margin:32px 0 14px;">Work With Us</h2>
+<p>If your business needs a website that builds trust and converts visitors into enquiries, The Sonic Media can build it. <a href="#" onclick="closeCaseStudy();navigate('contact');return false;" style="color:#FF5C00;text-decoration:underline;">Get in touch</a>.</p>`
+  }
+};
+
+/* ───────────────────────────────────────────────────────────
+   ARCHIVED — previous generic blog-style entries (not real
+   client case studies). Removed from the live caseStudies
+   object per request. Restore by moving an entry back into
+   caseStudies{} above and re-adding a matching card to
+   D.casestudies.items further down this file.
+   ─────────────────────────────────────────────────────────── */
+const __archivedCaseStudies = {
   'd2c-growth-playbook': {
     title: 'How Indian D2C Brands Can Scale from ₹5L to ₹50L Monthly Revenue in 6 Months',
     subtitle: 'The Exact Growth Blueprint That Delivered 10× Revenue for Our D2C Clients',
@@ -2265,6 +2308,12 @@ const PAGE_DATA = {
     titleSpan: 'Ideas',
     /* ── EDIT CASE STUDY CARDS HERE — changes reflect on BOTH homepage & Case Studies page ── */
     items: [
+      { id: 'ledgerlink-website-development', img: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&q=80', cat: 'technology', catLabel: 'Technology', date: 'Jun 10, 2026', title: 'How The Sonic Media Built a Premium Corporate Website for LedgerLink Consultation Private Limited', excerpt: 'LedgerLink had no website and no digital identity. Here is how we built lcpladvisory.com to turn first-time visitors into trusted enquiries.' },
+    ],
+    /* ── ARCHIVED CARDS — old generic blog-style entries, removed per request.
+         Restore by moving an item back into the array above (and the matching
+         entry back into caseStudies{} in this file). ── */
+    __archivedItems: [
       { id: 'd2c-growth-playbook',   img: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80',  cat: 'strategy',     catLabel: 'Strategy',     date: 'May 18, 2026', title: 'How Indian D2C Brands Can Scale from ₹5L to ₹50L Monthly Revenue in 6 Months',    excerpt: 'The exact growth blueprint — paid media architecture, retention flows, and CRO — that took three of our D2C clients to 10× revenue without increasing their ad budget.' },
       { id: 'whatsapp-marketing-2026', img: 'https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=600&q=80', cat: 'performance',  catLabel: 'Performance',  date: 'May 5, 2026',  title: 'WhatsApp Marketing in 2026: How to Generate 35% of Your Revenue from One Channel',  excerpt: 'Most Indian brands treat WhatsApp as a customer support tool. The best ones use it as their highest-ROAS sales channel. Here is the complete strategy.' },
       { id: 'local-seo-domination',  img: 'https://images.unsplash.com/photo-1573804633927-bfcbcd909acd?w=600&q=80',  cat: 'seo',          catLabel: 'SEO',          date: 'Apr 22, 2026', title: 'How to Dominate Local Search in Your City and Become the #1 Brand on Google Maps',  excerpt: 'Local SEO is the most underutilised growth channel for Indian businesses. This is the step-by-step system we use to rank clients at the top of local search in 60 days.' },
